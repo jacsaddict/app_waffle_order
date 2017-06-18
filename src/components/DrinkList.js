@@ -15,6 +15,7 @@ import NavigationContainer from './NavigationContainer';
 import {Button,Icon} from 'native-base';
 import {connect} from 'react-redux';
 import {add_drink,minus_drink,add_to_cart_drink} from '../states/order-actions.js';
+import * as Animatable from 'react-native-animatable';
 
 
 
@@ -32,6 +33,9 @@ class DrinkItem extends React.Component {
         this.func_add_to_cart = this.func_add_to_cart.bind(this);
     }
 
+    componentDidMount(){
+      this.refs.view.fadeIn(600);
+    }
 
     func_add(id)
       {
@@ -57,7 +61,7 @@ class DrinkItem extends React.Component {
         // const {searchText} = this.props;
         // const {navigate} = this.props.navigation;
         return (
-          <View style={styles.mainbox}>
+          <Animatable.View style={styles.mainbox} ref="view">
               <View style={styles.rowContainer}>
                 <Text style={styles.itemname}>
                   {this.props.item2[0]}
@@ -106,7 +110,7 @@ class DrinkItem extends React.Component {
                 <Button small onPress={() => this.func_add(2)  }><Text>+</Text></Button>
                 <Button small onPress={() => this.func_add_to_cart(2)}><Icon name="cart"/></Button>
               </View>
-          </View>
+          </Animatable.View>
         );
     }
 }

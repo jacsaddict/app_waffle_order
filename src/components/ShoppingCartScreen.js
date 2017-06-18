@@ -19,13 +19,15 @@ import {Button,Icon} from 'native-base';
 import {connect} from 'react-redux';
 import PanCakeList from './PanCakeList.js';
 import DrinkList from './DrinkList.js';
-import {delete_from_cart_pancake,delete_from_cart_drink,submit} from '../states/order-actions.js';
+import {delete_from_cart_pancake,delete_from_cart_drink,submit,clear_pancake,clear_drink} from '../states/order-actions.js';
+import * as Animatable from 'react-native-animatable';
 
 
 class ShoppingCart extends React.Component {
 
     constructor(props) {
       super(props);
+
       this.total_price = 0;
       this.state = {
                 input_name : '',
@@ -77,7 +79,7 @@ class ShoppingCart extends React.Component {
                                    <Text style = {styles.quantity}>{m.quantity}</Text>
                                    <Text style = {styles.quantity}>{m.price}</Text>
                                    <Text style = {styles.quantity2}>{m.quantity * m.price}</Text>
-                                   <Text ><Icon style={{color: 'dimgray'}} name = 'delete' onPress = {() => this.handelDelete(m.name)}></Icon></Text>
+                                   <Text ><Icon name = 'delete' onPress = {() => this.handelDelete(m.name)}></Icon></Text>
 
                 </View>))}
 
@@ -89,10 +91,10 @@ class ShoppingCart extends React.Component {
                                    <Text style = {styles.quantity}>{m.quantity}</Text>
                                    <Text style = {styles.quantity}>{m.price}</Text>
                                    <Text style = {styles.quantity2}>{m.quantity * m.price}</Text>
-                                   <Text ><Icon style={{color: 'dimgray'}} name = 'delete' onPress = {() => this.handelDeleteDrink(m.name)}></Icon></Text>
+                                   <Text ><Icon name = 'delete' onPress = {() => this.handelDeleteDrink(m.name)}></Icon></Text>
 
                 </View>))}
-                <Text style={styles.text}>Total : {this.total_price}</Text>
+
             </View>
             <View>
               <Text style={{fontFamily: 'monospace'}}>Name</Text>
@@ -125,12 +127,12 @@ class ShoppingCart extends React.Component {
 
 
               </ScrollView>
-              <Button block transparent  onPress = {this.handelSubmit} ><Text style={{fontFamily: 'monospace'}}>submit</Text></Button>
-              <Button block transparent  onPress={() => this.handelAdd(this.props.present,this.props.present2,this.state.input_name,this.state.input_phone,this.state.input_email,this.state.input_time)}>
+              <Animatable.View ref="submit"><Button  block transparent onPress = {this.handelSubmit} ><Text style={{fontFamily: 'monospace'}}>submit</Text></Button></Animatable.View>
+              <Button block transparent onPress={() => this.handelAdd(this.props.present,this.props.present2,this.state.input_name,this.state.input_phone,this.state.input_email,this.state.input_time)}>
                   {/* <Icon name='rocket' style={styles.icon} /> */}
                   <Text style={{fontFamily: 'monospace'}}>add to record</Text>
               </Button>
-              <Button block transparent  onPress={() => navigate('Waffle')}>
+              <Button block transparent onPress={() => navigate('Waffle')}>
                   {/* <Icon name='rocket' style={styles.icon} /> */}
                   <Text style={{fontFamily: 'monospace'}}>return</Text>
               </Button>
@@ -160,6 +162,7 @@ class ShoppingCart extends React.Component {
         this.setState({
           danger_name : true
         });
+        this.refs.submit.shake(600);
         Alert.alert(
           '請輸入姓名',
           '姓名為點餐用',
@@ -174,6 +177,7 @@ class ShoppingCart extends React.Component {
         this.setState({
           danger_phone : true
         });
+        this.refs.submit.shake(600);
         Alert.alert(
           '請輸入電話',
           '電話為點餐用',
@@ -188,6 +192,7 @@ class ShoppingCart extends React.Component {
         this.setState({
           danger_email: true
         });
+        this.refs.submit.shake(600);
         Alert.alert(
           '請輸入e-mail',
           'e-mail為點餐用',
@@ -206,13 +211,15 @@ class ShoppingCart extends React.Component {
                   products,
                   this.props.present,
                   this.props.present2,
-                  this.total_price
+                  this.total_price,
                 );
       this.setState({
         input_name: '',
         input_phone: '',
         input_email: ''
       });
+      this.props.dispatch(clear_pancake());
+      this.props.dispatch(clear_drink());
     }
 
 }

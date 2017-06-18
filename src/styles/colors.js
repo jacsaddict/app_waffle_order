@@ -13,5 +13,6 @@ export default appColors = {
     secondaryLightText: '#8a6d3b',
     text: '#666',
     textLight: '#bcbcbc',
-    mask: 'rgba(0, 0, 0, 0.5)'
+    mask: 'rgba(0, 0, 0, 0.5)',
+    buttonColor: 'rgb(255, 144, 26)'
 };

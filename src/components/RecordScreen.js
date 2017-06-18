@@ -51,23 +51,23 @@ class RecordScreen extends React.Component {
 
         return (
             <NavigationContainer navigate={navigate} title='Record'>
-              <View style={{flex: 9}}>
+
+              <View style={{flex: 1, justifyContent: 'center'}}>
                   {this.props.records.map((m=>
                       <View key = {count++} >
-                        <Text style={{height: 20}}></Text>
                         {m.map((k=>
-                          <Text style={{textAlign: 'center',justifyContent: 'space-between'}} key = {uuid().toString()} id = "list">{k.name} {k.quantity}</Text>
+                          <Text key = {uuid().toString()} id = "list">{k.name} {k.quantity}</Text>
                       ))}
                       {(count === 2) && <Button block transparent  onPress={() => this.quick_order(temp1[0],temp2[0])}><Text style={{fontFamily: 'monospace'}}>quick order</Text></Button>}
                       {(count === 4) && <Button block transparent  onPress={() => this.quick_order(temp1[1],temp2[1])}><Text style={{fontFamily: 'monospace'}}>quick order</Text></Button>}
                       {(count === 6) && <Button block transparent  onPress={() => this.quick_order(temp1[2],temp2[2])}><Text style={{fontFamily: 'monospace'}}>quick order</Text></Button>}
                     </View>
                   ))}
+              <Button block transparent  onPress={() => navigate('Waffle')}>
+                  {/* <Icon name='rocket' style={styles.icon} /> */}
+                  <Text style={{fontFamily: 'monospace'}}>return</Text>
+              </Button>
             </View>
-            <Button block transparent  onPress={() => navigate('Waffle')}>
-                {/* <Icon name='rocket' style={styles.icon} /> */}
-                <Text style={{fontFamily: 'monospace',flex: 1,textAlign: 'center'}}>return</Text>
-            </Button>
             </NavigationContainer>
         );
     }

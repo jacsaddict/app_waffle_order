@@ -17,6 +17,9 @@ import {Button,Icon} from 'native-base';
 import {connect} from 'react-redux';
 import PanCakeList from './PanCakeList.js';
 import DrinkList from './DrinkList.js';
+import * as Animatable from 'react-native-animatable';
+
+
 
 
 
@@ -53,13 +56,15 @@ export default class MenuScreen extends React.Component {
                     <Text style={styles.text}>waffle</Text>
                     <Icon name = 'chevron-right'></Icon>
                 </Button>
-                {this.state.PanCakeList_open === 1 && <PanCakeList/>}
+                {this.state.PanCakeList_open === 1 && <View ref="PanCakeList_Animation"><PanCakeList /></View>}
+                {/* <View ref="PanCakeList_Animation"><PanCakeList /></View> */}
                 <Button block transparent onPress={this.handleDrinkList}>
                     {/* <Icon name='rocket' style={styles.icon} /> */}
                     <Text style={styles.text}>drinks</Text>
                     <Icon name = 'chevron-right'></Icon>
                 </Button>
-                {this.state.DrinkList_open === 1 && <DrinkList />}
+                {this.state.DrinkList_open === 1 &&  <View ref="DrinkList_Animation"><DrinkList /></View>}
+                {/* <View ref="DrinkList_Animation"><DrinkList /></View> */}
               </ScrollView>
 
 
@@ -76,13 +81,16 @@ export default class MenuScreen extends React.Component {
 
         handlePanCakeList(){
           if(this.state.PanCakeList_open === 0)
+          {
             this.setState({
               PanCakeList_open : 1
-            })
+            });
+
+          }
           else {
-            this.setState({
+          this.setState({
               PanCakeList_open : 0
-            })
+          });
           }
       }
       handleDrinkList(){
@@ -91,6 +99,7 @@ export default class MenuScreen extends React.Component {
             DrinkList_open : 1
           })
         else {
+          // window.refs.DrinkList_Animation.fadeOut(600);
           this.setState({
             DrinkList_open : 0
           })
@@ -109,7 +118,7 @@ const styles = {
     // opacity:0.8,
     width: undefined,
     height: undefined,
-    flex: 0.7
+    flex: 1
   },
   store:{
 
