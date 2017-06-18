@@ -4,7 +4,8 @@ import {
     Text,
     View,
     ListView,
-    Image
+    Image,
+    ScrollView
 } from 'react-native';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
 
@@ -45,30 +46,28 @@ export default class MenuScreen extends React.Component {
             <NavigationContainer navigate={navigate} title='Menu'>
               <Image source={require('../images/pk_bg2.jpg')} style={styles.image} resizeMode='cover'>
               </Image>
-                <View style={{flex: 3, justifyContent: 'center'}}>
+                <ScrollView style={{flex: 3}}>
                     {/* <Text style={[styles.text, styles.store]}>高菲鬆餅屋</Text> */}
                 <Button block transparent onPress={this.handlePanCakeList}>
                     {/* <Icon name='rocket' style={styles.icon} /> */}
-                    <Icon name = 'pizza'></Icon>
                     <Text style={styles.text}>waffle</Text>
                     <Icon name = 'chevron-right'></Icon>
                 </Button>
+                {this.state.PanCakeList_open === 1 && <PanCakeList/>}
                 <Button block transparent onPress={this.handleDrinkList}>
                     {/* <Icon name='rocket' style={styles.icon} /> */}
                     <Text style={styles.text}>drinks</Text>
+                    <Icon name = 'chevron-right'></Icon>
                 </Button>
-                <Button block transparent  onPress={() => navigate('Waffle')}>
-                    {/* <Icon name='rocket' style={styles.icon} /> */}
-                  
-                    <Text style={styles.text}>return</Text>
-
-                </Button>
-              </View>
-
-
                 {this.state.DrinkList_open === 1 && <DrinkList />}
-                {this.state.PanCakeList_open === 1 && <PanCakeList/>}
+              </ScrollView>
 
+
+                {/* {this.state.DrinkList_open === 1 && <DrinkList />}
+                {this.state.PanCakeList_open === 1 && <PanCakeList/>} */}
+                <Button block transparent  onPress={() => navigate('Waffle')}>
+                    <Text style={{textAlign:'right',fontFamily: 'monospace'}}>return</Text>
+                </Button>
             </NavigationContainer>
         );
     }
@@ -76,16 +75,30 @@ export default class MenuScreen extends React.Component {
 
 
         handlePanCakeList(){
-        this.setState({
-          PanCakeList_open : 1,
-          DrinkList_open : 0
-        })
+          if(this.state.PanCakeList_open === 0)
+            this.setState({
+              PanCakeList_open : 1
+            })
+          else {
+            this.setState({
+              PanCakeList_open : 0
+            })
+          }
       }
       handleDrinkList(){
-        this.setState({
-          DrinkList_open : 1,
-          PanCakeList_open : 0
-        })
+        if(this.state.DrinkList_open === 0)
+          this.setState({
+            DrinkList_open : 1
+          })
+        else {
+          this.setState({
+            DrinkList_open : 0
+          })
+        }
+        // this.setState((prevState)=>{
+        //   DrinkList_open : !prevState.DrinkList_open
+        // })
+        // this.forceUpdate();
       }
 
 
@@ -96,16 +109,17 @@ const styles = {
     // opacity:0.8,
     width: undefined,
     height: undefined,
-    flex: 2
+    flex: 0.7
   },
   store:{
 
   },
   text:{
-    textAlign: 'center',
+    // textAlign: 'center',
     opacity : 1,
     flex: 1,
-    fontFamily: 'monospace'
+    fontFamily: 'monospace',
+    // fontWeight: 'bold',
+    fontSize: 20
   }
-
 }

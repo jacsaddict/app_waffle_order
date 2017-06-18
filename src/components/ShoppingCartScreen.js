@@ -26,7 +26,7 @@ class ShoppingCart extends React.Component {
 
     constructor(props) {
       super(props);
-
+      this.total_price = 0;
       this.state = {
                 input_name : '',
                 input_phone : '',
@@ -47,14 +47,14 @@ class ShoppingCart extends React.Component {
     render() {
         // const {searchText} = this.props;
         const {navigate} = this.props.navigation;
-        var total_price = 0;
+        this.total_price = 0;
         for(var i = 0;i<this.props.present.length;i++)
         {
-            total_price += this.props.present[i].price*this.props.present[i].quantity;
+            this.total_price += this.props.present[i].price*this.props.present[i].quantity;
         }
         for(var i = 0;i<this.props.present2.length;i++)
         {
-            total_price += this.props.present2[i].price*this.props.present2[i].quantity;
+            this.total_price += this.props.present2[i].price*this.props.present2[i].quantity;
         }
 
 
@@ -76,8 +76,8 @@ class ShoppingCart extends React.Component {
                                    <Text style={styles.itemname}>{m.name}</Text>
                                    <Text style = {styles.quantity}>{m.quantity}</Text>
                                    <Text style = {styles.quantity}>{m.price}</Text>
-                                   <Text>{m.quantity * m.price}</Text>
-                                   <Text ><Icon name = 'delete' onPress = {() => this.handelDelete(m.name)}></Icon></Text>
+                                   <Text style = {styles.quantity2}>{m.quantity * m.price}</Text>
+                                   <Text ><Icon style={{color: 'dimgray'}} name = 'delete' onPress = {() => this.handelDelete(m.name)}></Icon></Text>
 
                 </View>))}
 
@@ -88,52 +88,52 @@ class ShoppingCart extends React.Component {
                                    <Text style={styles.itemname}>{m.name}</Text>
                                    <Text style = {styles.quantity}>{m.quantity}</Text>
                                    <Text style = {styles.quantity}>{m.price}</Text>
-                                   <Text>{m.quantity * m.price}</Text>
-                                   <Text ><Icon name = 'delete' onPress = {() => this.handelDelete(m.name)}></Icon></Text>
+                                   <Text style = {styles.quantity2}>{m.quantity * m.price}</Text>
+                                   <Text ><Icon style={{color: 'dimgray'}} name = 'delete' onPress = {() => this.handelDeleteDrink(m.name)}></Icon></Text>
 
                 </View>))}
-
+                <Text style={styles.text}>Total : {this.total_price}</Text>
             </View>
             <View>
-              <Text>姓名</Text>
+              <Text style={{fontFamily: 'monospace'}}>Name</Text>
               <TextInput
-                style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+                style={{height: 40, borderColor: 'gray', borderWidth: 1,fontFamily: 'monospace'}}
                 onChangeText={(input_name) => this.setState({input_name})}
                 value={this.state.input_name}
-                placeholder="請輸入姓名"
+                placeholder="Please input your name."
                 placeholderTextColor='grey'
               />
-              <Text>電話</Text>
+              <Text style={{fontFamily: 'monospace'}}>Phone number</Text>
               <TextInput
-                style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+                style={{height: 40, borderColor: 'gray', borderWidth: 1,fontFamily: 'monospace'}}
                 onChangeText={(input_phone) => this.setState({input_phone})}
                 value={this.state.input_phone}
                 keyboardType='phone-pad'
-                placeholder="請輸入電話"
+                placeholder="Please input your phome number."
                 placeholderTextColor='grey'
               />
-              <Text>e-mail</Text>
+              <Text style={{fontFamily: 'monospace'}}>E-mail</Text>
               <TextInput
-                style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+                style={{height: 40, borderColor: 'gray', borderWidth: 1,fontFamily: 'monospace'}}
                 onChangeText={(input_email) => this.setState({input_email})}
                 value={this.state.input_email}
                 keyboardType='email-address'
-                placeholder="請輸入 e-mail"
+                placeholder="Please input your e-mail."
                 placeholderTextColor='grey'
               />
             </View>
-            <Button block transparent  onPress = {this.handelSubmit} ><Text>Submit</Text></Button>
-            <Button block transparent  onPress={() => this.handelAdd(this.props.present,this.props.present2,this.state.input_name,this.state.input_phone,this.state.input_email,this.state.input_time)}>
-                {/* <Icon name='rocket' style={styles.icon} /> */}
-                <Text>加到紀錄</Text>
-            </Button>
-            <Button block transparent  onPress={() => navigate('Waffle')}>
-                {/* <Icon name='rocket' style={styles.icon} /> */}
-                <Text>返回</Text>
-            </Button>
+
 
               </ScrollView>
-
+              <Button block transparent  onPress = {this.handelSubmit} ><Text style={{fontFamily: 'monospace'}}>submit</Text></Button>
+              <Button block transparent  onPress={() => this.handelAdd(this.props.present,this.props.present2,this.state.input_name,this.state.input_phone,this.state.input_email,this.state.input_time)}>
+                  {/* <Icon name='rocket' style={styles.icon} /> */}
+                  <Text style={{fontFamily: 'monospace'}}>add to record</Text>
+              </Button>
+              <Button block transparent  onPress={() => navigate('Waffle')}>
+                  {/* <Icon name='rocket' style={styles.icon} /> */}
+                  <Text style={{fontFamily: 'monospace'}}>return</Text>
+              </Button>
             </NavigationContainer>
         );
     }
@@ -206,6 +206,7 @@ class ShoppingCart extends React.Component {
                   products,
                   this.props.present,
                   this.props.present2,
+                  this.total_price
                 );
       this.setState({
         input_name: '',
@@ -260,6 +261,9 @@ class ShoppingCart extends React.Component {
       },
       quantity: {
         width : 20
+      },
+      quantity2: {
+        width : 25
       },
       itemname_title:{
         width: 80,

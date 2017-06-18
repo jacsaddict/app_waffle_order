@@ -4,7 +4,7 @@ const postBaseUrl = 'http://172.20.134.151:3000/api';
 //developing
 //const postBaseUrl = 'http://waffle-dev.us-west-2.elasticbeanstalk.com/api';
 
-export function CreateOrder(name, email, phone, time, products, products_pan, products_drinck) {
+export function CreateOrder(name, email, phone, time, products, products_pan, products_drinck,total_price) {
     let url = `${postBaseUrl}/orders`;
 
     console.log(`Making POST request to: ${url}`);
@@ -36,7 +36,8 @@ export function CreateOrder(name, email, phone, time, products, products_pan, pr
         phone,
         time,
         products,
-        message
+        message,
+        total_price
       })
     }).then(function(res) {
       if(res.status !== 200)

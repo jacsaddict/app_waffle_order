@@ -5,13 +5,14 @@ import {
     View,
     ListView,
     StyleSheet,
-    ScrollView,
     Image
 } from 'react-native';
+import InfiniteScrollView from 'react-native-infinite-scroll-view';
 import Swiper from 'react-native-swiper';
+
 import {Content} from 'native-base';
 import NavigationContainer from './NavigationContainer';
-import ImageSlider from 'react-native-image-slider';
+
 
 import {Button} from 'native-base';
 import {connect} from 'react-redux';
@@ -31,19 +32,19 @@ class WaffleScreen extends React.Component {
         const {navigate} = this.props.navigation;
         return (
             <NavigationContainer navigate={navigate} title='Waffle'>
-                <View style={{flex: 4, justifyContent: 'center'}}>
+              <View style={{flex: 4, justifyContent: 'center'}}>
                   <Swiper
                     horizontal={true}
                     autoplay={true}
                     width={undefined} // or set height directly
                     height={270}
                   >
-                    <Image source={require('../images/waffle-1.jpg')} style={{width:undefined,height:undefined}} style={{flex:1}} resizeMode='cover'></Image>
-                    <Image source={require('../images/waffle-2.jpg')} style={{width:undefined,height:undefined}} style={{flex:1}} resizeMode='cover'></Image>
+                    <Image source={require('../images/waffle-1.jpg')} style={{width:undefined,height:undefined}} style={{flex:1,opacity:0.95}} resizeMode='cover'></Image>
+                    <Image source={require('../images/waffle-2.jpg')} style={{width:undefined,height:undefined}} style={{flex:1,opacity:0.95}} resizeMode='cover'></Image>
                     </Swiper>
                     <Text style={{textAlign: 'center',flex: 1}}>Waffle Store</Text>
                 </View>
-                <View style={{flex: 3,justifyContent:'center'}}>
+                <View style={{flex: 3, justifyContent: 'center'}}>
                 <Button block transparent  onPress={() => navigate('Menu')}>
                     {/* <Icon name='rocket' style={styles.icon} /> */}
                     <Text>開始點餐</Text>
