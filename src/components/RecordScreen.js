@@ -18,6 +18,7 @@ import {connect} from 'react-redux';
 import {q_order_pancake,q_order_drink} from '../states/order-actions.js';
 import {listOrder} from '../api/order.js';
 
+const reqRcords = []
 class RecordScreen extends React.Component {
     // static propTypes = {
     //     navigation: PropTypes.object.isRequired,
@@ -27,26 +28,27 @@ class RecordScreen extends React.Component {
     constructor(props) {
 
       super(props);
-      this.outMessage;
+      this.state = {
+          record_first:  {},
+          record_second: {},
+          record_third:  {}
+      };
       this.quick_order = this.quick_order.bind(this);
     }
     async componentDidMount(){
         const value = await AsyncStorage.getItem('USER');
-        console.log(value);
-        console.log(typeof(value));
         let user = JSON.parse(value);
-        listOrder(user.userid, user.name, user.email).then(function(res) {
-            this.outMessage = res;
-            console.log(this.outMessage[0]);
+        await listOrder(user.userid, user.name, user.email).then(function(res) {
+            reqRcords = res;
         }).catch(function(err){
             console.log(err);
         });
-        // AsyncStorage.getItem('USER', (result) => {
-        //     console.log(result);
-        //     // listOrder(result.userid, result.name, result.email);
-        // });
+        console.log(reqRcords);
+        this.setState({
+            record_first:  reqRcords[0].products[0]
+        });
+        console.log(this.state);
     }
-
     render() {
         // const {searchText} = this.props;
         const {navigate} = this.props.navigation;
@@ -80,7 +82,6 @@ class RecordScreen extends React.Component {
                     </View>
                   ))}
             </View>
-            <Text>{this.outMessage}</Text>
             <Button block transparent  onPress={() => navigate('Waffle')}>
                 {/* <Icon name='rocket' style={styles.icon} /> */}
                 <Text style={{fontFamily: 'monospace',flex: 1,textAlign: 'center'}}>return</Text>
