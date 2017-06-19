@@ -57,9 +57,13 @@ export function order(state = initOrderState, action){
               quantity : [0,0,0,0]
             }
         case '@ORDER/QORDERPANCAKE':
+            console.log(action.temp);
+            var UpdatPresent = action.temp.filter(function(mixRecord){
+          return state.item.indexOf(mixRecord.name) > -1;
+        });
             return{
               ...state,
-              present : action.temp,
+              present : UpdatPresent,
               quantity : [0,0,0,0]
             }
         default:
@@ -128,10 +132,13 @@ export function order2(state = initOrderState2, action){
             quantity2: [0,0,0,0,0]
         };
       case '@ORDER/QORDERDRINK':
+      var UpdatPresent = action.temp.filter(function(mixRecord){
+          return state.item2.indexOf(mixRecord.name) > -1;
+          });
           return{
             ...state,
             // console.log(action.temp);
-            present2 : action.temp,
+            present2 : UpdatPresent,
             quantity : [0,0,0,0]
           }
       default:
