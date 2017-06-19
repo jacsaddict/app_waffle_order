@@ -7,27 +7,26 @@ import {
     ListView,
     TextInput,
     ScrollView,
-    StyleSheet
+    StyleSheet,
+    AsyncStorage,
 } from 'react-native';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
 
 import {Content} from 'native-base';
 import NavigationContainer from './NavigationContainer';
 
-import {CreateOrder} from '../api/order.js'
+import {CreateOrder, CreateUser} from '../api/order.js'
 import {Button,Icon} from 'native-base';
 import {connect} from 'react-redux';
 import PanCakeList from './PanCakeList.js';
 import DrinkList from './DrinkList.js';
-import {delete_from_cart_pancake,delete_from_cart_drink,submit,clear_pancake,clear_drink} from '../states/order-actions.js';
-import * as Animatable from 'react-native-animatable';
-
+import {delete_from_cart_pancake,delete_from_cart_drink,submit} from '../states/order-actions.js';
+import uuid from 'uuid';
 
 class ShoppingCart extends React.Component {
 
     constructor(props) {
       super(props);
-
       this.total_price = 0;
       this.state = {
                 input_name : '',
@@ -44,11 +43,13 @@ class ShoppingCart extends React.Component {
       this.handelDelete = this.handelDelete.bind(this);
       this.handelDeleteDrink = this.handelDeleteDrink.bind(this);
       this.handelSubmit = this.handelSubmit.bind(this);
+      this.handleUser = this.handleUser.bind(this);
     }
 
     render() {
         // const {searchText} = this.props;
         const {navigate} = this.props.navigation;
+        const userid = uuid();
         this.total_price = 0;
         for(var i = 0;i<this.props.present.length;i++)
         {
@@ -79,7 +80,7 @@ class ShoppingCart extends React.Component {
                                    <Text style = {styles.quantity}>{m.quantity}</Text>
                                    <Text style = {styles.quantity}>{m.price}</Text>
                                    <Text style = {styles.quantity2}>{m.quantity * m.price}</Text>
-                                   <Text ><Icon name = 'delete' onPress = {() => this.handelDelete(m.name)}></Icon></Text>
+                                   <Text ><Icon style={{color: 'dimgray'}} name = 'delete' onPress = {() => this.handelDelete(m.name)}></Icon></Text>
 
                 </View>))}
 
@@ -91,10 +92,10 @@ class ShoppingCart extends React.Component {
                                    <Text style = {styles.quantity}>{m.quantity}</Text>
                                    <Text style = {styles.quantity}>{m.price}</Text>
                                    <Text style = {styles.quantity2}>{m.quantity * m.price}</Text>
-                                   <Text ><Icon name = 'delete' onPress = {() => this.handelDeleteDrink(m.name)}></Icon></Text>
+                                   <Text ><Icon style={{color: 'dimgray'}} name = 'delete' onPress = {() => this.handelDeleteDrink(m.name)}></Icon></Text>
 
                 </View>))}
-
+                <Text style={styles.text}>Total : {this.total_price}</Text>
             </View>
             <View>
               <Text style={{fontFamily: 'monospace'}}>Name</Text>
@@ -127,22 +128,38 @@ class ShoppingCart extends React.Component {
 
 
               </ScrollView>
-              <Animatable.View ref="submit"><Button  block transparent onPress = {this.handelSubmit} ><Text style={{fontFamily: 'monospace'}}>submit</Text></Button></Animatable.View>
-              <Button block transparent onPress={() => this.handelAdd(this.props.present,this.props.present2,this.state.input_name,this.state.input_phone,this.state.input_email,this.state.input_time)}>
+              <Button block transparent  onPress = {() => {this.handelSubmit();this.handleUser(userid ,this.state.input_name, this.state.input_email);}} ><Text style={{fontFamily: 'monospace'}}>submit</Text></Button>
+              <Button block transparent  onPress={() => {this.handelAdd(this.props.present,this.props.present2,this.state.input_name,this.state.input_phone,this.state.input_email,this.state.input_time);}}>
                   {/* <Icon name='rocket' style={styles.icon} /> */}
                   <Text style={{fontFamily: 'monospace'}}>add to record</Text>
               </Button>
-              <Button block transparent onPress={() => navigate('Waffle')}>
+              <Button block transparent  onPress={() => navigate('Waffle')}>
                   {/* <Icon name='rocket' style={styles.icon} /> */}
                   <Text style={{fontFamily: 'monospace'}}>return</Text>
               </Button>
+              <Button onPress={()=>{AsyncStorage.removeItem('USER').then(value => console.log(value));}}><Text>aaaaaa</Text></Button>
             </NavigationContainer>
         );
     }
 
 
-
-
+    async handleUser(userid, name, email){
+        const value = await AsyncStorage.getItem('USER');
+        console.log(value);
+        if(value !== null){
+            console.log('User existed.');
+        }else{
+          var UID_object = {
+                userid: userid,
+                name: name,
+                email: email
+              };
+          AsyncStorage.setItem('USER', JSON.stringify(UID_object), () =>{
+              console.log('An user has been created.');
+          });
+          CreateUser(userid, name, email);
+        }
+    }
 
 
     handelAdd(present1,present2,name,phone,email,time){
@@ -162,7 +179,6 @@ class ShoppingCart extends React.Component {
         this.setState({
           danger_name : true
         });
-        this.refs.submit.shake(600);
         Alert.alert(
           '請輸入姓名',
           '姓名為點餐用',
@@ -177,7 +193,6 @@ class ShoppingCart extends React.Component {
         this.setState({
           danger_phone : true
         });
-        this.refs.submit.shake(600);
         Alert.alert(
           '請輸入電話',
           '電話為點餐用',
@@ -192,7 +207,6 @@ class ShoppingCart extends React.Component {
         this.setState({
           danger_email: true
         });
-        this.refs.submit.shake(600);
         Alert.alert(
           '請輸入e-mail',
           'e-mail為點餐用',
@@ -211,15 +225,13 @@ class ShoppingCart extends React.Component {
                   products,
                   this.props.present,
                   this.props.present2,
-                  this.total_price,
+                  this.total_price
                 );
       this.setState({
         input_name: '',
         input_phone: '',
         input_email: ''
       });
-      this.props.dispatch(clear_pancake());
-      this.props.dispatch(clear_drink());
     }
 
 }

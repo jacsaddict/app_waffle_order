@@ -4,6 +4,7 @@ import {
     Text,
     View,
     ListView,
+    AsyncStorage,
 } from 'react-native';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
 
@@ -15,7 +16,7 @@ import {Button} from 'native-base';
 import {connect} from 'react-redux';
 
 import {q_order_pancake,q_order_drink} from '../states/order-actions.js';
-
+import {listOrder} from '../api/order.js';
 
 class RecordScreen extends React.Component {
     // static propTypes = {
@@ -26,11 +27,26 @@ class RecordScreen extends React.Component {
     constructor(props) {
 
       super(props);
-
+      this.outMessage;
       this.quick_order = this.quick_order.bind(this);
-
-
     }
+    async componentDidMount(){
+        const value = await AsyncStorage.getItem('USER');
+        console.log(value);
+        console.log(typeof(value));
+        let user = JSON.parse(value);
+        listOrder(user.userid, user.name, user.email).then(function(res) {
+            this.outMessage = res;
+            console.log(this.outMessage[0]);
+        }).catch(function(err){
+            console.log(err);
+        });
+        // AsyncStorage.getItem('USER', (result) => {
+        //     console.log(result);
+        //     // listOrder(result.userid, result.name, result.email);
+        // });
+    }
+
     render() {
         // const {searchText} = this.props;
         const {navigate} = this.props.navigation;
@@ -51,23 +67,24 @@ class RecordScreen extends React.Component {
 
         return (
             <NavigationContainer navigate={navigate} title='Record'>
-
-              <View style={{flex: 1, justifyContent: 'center'}}>
+              <View style={{flex: 9}}>
                   {this.props.records.map((m=>
                       <View key = {count++} >
+                        <Text style={{height: 20}}></Text>
                         {m.map((k=>
-                          <Text key = {uuid().toString()} id = "list">{k.name} {k.quantity}</Text>
+                          <Text style={{textAlign: 'center',justifyContent: 'space-between'}} key = {uuid().toString()} id = "list">{k.name} {k.quantity}</Text>
                       ))}
                       {(count === 2) && <Button block transparent  onPress={() => this.quick_order(temp1[0],temp2[0])}><Text style={{fontFamily: 'monospace'}}>quick order</Text></Button>}
                       {(count === 4) && <Button block transparent  onPress={() => this.quick_order(temp1[1],temp2[1])}><Text style={{fontFamily: 'monospace'}}>quick order</Text></Button>}
                       {(count === 6) && <Button block transparent  onPress={() => this.quick_order(temp1[2],temp2[2])}><Text style={{fontFamily: 'monospace'}}>quick order</Text></Button>}
                     </View>
                   ))}
-              <Button block transparent  onPress={() => navigate('Waffle')}>
-                  {/* <Icon name='rocket' style={styles.icon} /> */}
-                  <Text style={{fontFamily: 'monospace'}}>return</Text>
-              </Button>
             </View>
+            <Text>{this.outMessage}</Text>
+            <Button block transparent  onPress={() => navigate('Waffle')}>
+                {/* <Icon name='rocket' style={styles.icon} /> */}
+                <Text style={{fontFamily: 'monospace',flex: 1,textAlign: 'center'}}>return</Text>
+            </Button>
             </NavigationContainer>
         );
     }

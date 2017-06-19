@@ -118,7 +118,7 @@ const styles = {
     // opacity:0.8,
     width: undefined,
     height: undefined,
-    flex: 1
+    flex: 0.75
   },
   store:{
 
