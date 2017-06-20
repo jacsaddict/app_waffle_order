@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Text,Image} from 'react-native';
-import {Container, Header, Button, Icon, Left, Right, Body, Title, Drawer,Footer,FooterTab,View} from 'native-base';
+import {Container, Header, Button, Icon, Left, Right, Body, Title, Drawer,Footer,FooterTab,View,Badge} from 'native-base';
 import DrawerSideBar from './DrawerSideBar';
 import appColors from '../styles/colors';
 import * as Animatable from 'react-native-animatable';
@@ -43,7 +43,7 @@ class NavigationContainer extends React.Component {
                                   <Icon name='phone' style={styles.icon}/>
                                 </Button>
                                 <Animatable.View ref="icon"><Button   style={styles.item} onPress={() => navigate('ShoppingCart')}>
-                                  <Icon name='cart' style={styles.icon} />
+                                    <Icon name='cart' style={{color: appColors.primaryLightText,flex:1}} />
                                 </Button></Animatable.View>
                             </FooterTab>
                         </Footer>
@@ -63,6 +63,8 @@ const styles = {
 
 export default connect((state) => {
     return {
-        ...state.ShoppingCartIcon
+        ...state.ShoppingCartIcon,
+        ...state.order,
+        ...state.order2
     };
 })(NavigationContainer);

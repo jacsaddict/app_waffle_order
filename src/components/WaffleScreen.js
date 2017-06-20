@@ -10,7 +10,7 @@ import {
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
 import Swiper from 'react-native-swiper';
 
-import {Content} from 'native-base';
+import {Content,Icon} from 'native-base';
 import NavigationContainer from './NavigationContainer';
 
 
@@ -45,24 +45,24 @@ class WaffleScreen extends React.Component {
                     <Image source={require('../images/waffle-1.jpg')} style={{width:undefined,height:undefined}} style={{flex:1,opacity:0.95}} resizeMode='cover'></Image>
                     <Image source={require('../images/waffle-2.jpg')} style={{width:undefined,height:undefined}} style={{flex:1,opacity:0.95}} resizeMode='cover'></Image>
                     </Swiper>
-                    <Text style={{textAlign: 'center',flex: 1}}>Waffle Store</Text>
+                    <Text style={{textAlign: 'center',flex: 1, fontWeight: '100', fontFamily: 'notoserif'}}>Waffle Store</Text>
                 </View>
                 <View style={{flex: 3, justifyContent: 'center'}}>
-                <Button block transparent  onPress={() => navigate('Menu')}>
+                <Button block transparent warning onPress={() => navigate('Menu')}>
                     {/* <Icon name='rocket' style={styles.icon} /> */}
-                    <Text>開始點餐</Text>
+                    <Icon name="pizza"/><Text style={styles.text}>開始點餐</Text>
                 </Button>
-                <Button block transparent  onPress={() => navigate('Record')}>
+                <Button block transparent warning onPress={() => navigate('Record')}>
                     {/* <Icon name='rocket' style={styles.icon} /> */}
-                    <Text>訂餐紀錄</Text>
+                    <Icon name="record"/><Text style={styles.text}>訂餐紀錄</Text>
                 </Button>
-                <Button block transparent  onPress={() => navigate('Waffle')}>
+                <Button block transparent warning onPress={() => navigate('Waffle')}>
                     {/* <Icon name='rocket' style={styles.icon} /> */}
-                    <Text>聯絡我們</Text>
+                    <Icon name="phone"/><Text style={styles.text}>聯絡我們</Text>
                 </Button>
-                <Button block transparent  onPress={() => navigate('ShoppingCart')}>
+                <Button block transparent warning onPress={() => navigate('ShoppingCart')}>
                     {/* <Icon name='rocket' style={styles.icon} /> */}
-                    <Text>購物車</Text>
+                    <Icon name="cart"/><Text style={styles.text}>購物車{"   "}</Text>
                 </Button>
               </View>
             </NavigationContainer>
@@ -70,6 +70,10 @@ class WaffleScreen extends React.Component {
     }
 }
 const styles = StyleSheet.create({
+  text:{
+    fontSize: 18,
+
+  }
 });
 
 export default connect(state => ({

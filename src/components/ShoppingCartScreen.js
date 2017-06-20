@@ -107,30 +107,31 @@ class ShoppingCart extends React.Component {
                 <Text style={styles.text}>{'\n'}Total : {this.total_price}{'\n'}</Text>
               </View>
             <View style={{justifyContent: 'center'}}>
-              <Text style={{fontFamily: 'monospace'}}>Name</Text>
+              <Text style={{fontFamily: 'monospace',color: '#444',fontWeight:'bold'}}>{"  "}Name</Text>
               <TextInput
-                style={{height: 40, borderColor: 'gray', borderWidth: 1,fontFamily: 'monospace'}}
+                style={{height: 40, borderColor: 'grey', borderWidth: 1,fontFamily: 'monospace',borderRadius: 8}}
                 onChangeText={(input_name) => this.setState({input_name})}
                 value={this.state.input_name}
-                placeholder="Please input your name."
+                placeholder=" Please input your name."
                 placeholderTextColor='grey'
+                underlineColorAndroid='#108838'
               /><Text>{'\n'}</Text>
-              <Text style={{fontFamily: 'monospace'}}>Phone number</Text>
+              <Text style={{fontFamily: 'monospace',color: '#444',fontWeight:'bold'}}>{"  "}Phone number</Text>
               <TextInput
-                style={{height: 40, borderColor: 'gray', borderWidth: 1,fontFamily: 'monospace'}}
+                style={{height: 40, borderColor: 'gray', borderWidth: 1,fontFamily: 'monospace',borderRadius: 8}}
                 onChangeText={(input_phone) => this.setState({input_phone})}
                 value={this.state.input_phone}
                 keyboardType='phone-pad'
-                placeholder="Please input your phome number."
+                placeholder=" Please input your phome number."
                 placeholderTextColor='grey'
               /><Text>{'\n'}</Text>
-              <Text style={{fontFamily: 'monospace'}}>E-mail</Text>
+              <Text style={{fontFamily: 'monospace',color: '#444',fontWeight:'bold'}}>{"  "}E-mail</Text>
               <TextInput
-                style={{height: 40, borderColor: 'gray', borderWidth: 1,fontFamily: 'monospace'}}
+                style={{height: 40, borderColor: 'gray', borderWidth: 1,fontFamily: 'monospace',borderRadius: 8}}
                 onChangeText={(input_email) => this.setState({input_email})}
                 value={this.state.input_email}
                 keyboardType='email-address'
-                placeholder="Please input your e-mail."
+                placeholder=" Please input your e-mail."
                 placeholderTextColor='grey'
               />
             </View>
@@ -239,6 +240,14 @@ class ShoppingCart extends React.Component {
                   this.props.present2,
                   this.total_price
                 );
+      Alert.alert(
+        '成功',
+        '您已經送出訂單',
+        [
+          {text: '好', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
       this.setState({
         input_name: '',
         input_phone: '',

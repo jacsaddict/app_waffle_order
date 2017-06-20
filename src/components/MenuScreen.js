@@ -113,11 +113,9 @@ const styles = {
 
   },
   text:{
-    // textAlign: 'center',
     opacity : 1,
     flex: 1,
     fontFamily: 'monospace',
-    // fontWeight: 'bold',
     fontSize: 20
   }
 }

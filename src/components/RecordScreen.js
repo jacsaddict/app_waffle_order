@@ -87,10 +87,10 @@ class RecordScreen extends React.Component {
           {section.content.map((m =>
             <View key={JSON.parse(m).name} style={styles.innercontent} >
               <Text  style={styles.contentText}>{JSON.parse(m).name}{"  "}{JSON.parse(m).quantity}</Text>
-              <Text>{'\n'}</Text>
+              <Text  style={{height: 7}}>{'\n'}</Text>
             </View>
           ))}
-          {section.content.length>0 && <Button rounded block onPress={() => this.quick_order(section.content)}><Text style={{textAlign: 'center'}}>Quick Order</Text></Button>}
+          {section.content.length>0 && <Button rounded style={{width: 150,alignSelf: 'center'}}  onPress={() => this.quick_order(section.content)}><Text style={{textAlign: 'center'}}>Quick Order</Text></Button>}
         </View>
       );
     }
@@ -147,8 +147,9 @@ const styles = {
       alignItems: 'stretch'
     },
     contentText:{
-        textAlign: "center",
-        fontFamily: "monospace"
+        textAlign: "right",
+        fontFamily: "monospace",
+        height: 18
     },
     image:{
     opacity:0.7,

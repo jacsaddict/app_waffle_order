@@ -43,7 +43,7 @@ class Example extends Component {
       },
       backgroundColor: '#FFE66F',//'#afbd5d',
       // opacity:0.3,
-      fontColor: '#fff',
+      fontColor: '#555',
       level: 10,
     },{
       title: '開始體驗鬆餅屋APP！',
@@ -54,7 +54,7 @@ class Example extends Component {
         width: 90 * 2.5,
       },
       backgroundColor: '#ACD6FF',
-      fontColor: '#fff',
+      fontColor: '#666',
       level: 10,
     }];
     return (
@@ -64,6 +64,9 @@ class Example extends Component {
         onSkipBtnClick={this.onSkipBtnHandle}
         onSlideChange={this.onSlideChangeHandle}
         pageArray={pageArray}
+        activeDotColor={"#1E90FF"}
+        rightTextColor={"#666"}
+        leftTextColor={"#fff"}
       />
     );
   }
