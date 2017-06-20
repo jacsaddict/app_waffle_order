@@ -39,7 +39,6 @@ export default class MenuScreen extends React.Component {
 
     this.handlePanCakeList = this.handlePanCakeList.bind(this);
     this.handleDrinkList   = this.handleDrinkList.bind(this);
-
     }
 
     render() {
@@ -99,15 +98,10 @@ export default class MenuScreen extends React.Component {
             DrinkList_open : 1
           })
         else {
-          // window.refs.DrinkList_Animation.fadeOut(600);
           this.setState({
             DrinkList_open : 0
           })
         }
-        // this.setState((prevState)=>{
-        //   DrinkList_open : !prevState.DrinkList_open
-        // })
-        // this.forceUpdate();
       }
 
 

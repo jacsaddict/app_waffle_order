@@ -122,3 +122,11 @@ export function main_display(){
       type: '@MAINBUTTON/MAINDISPLAY'
     }
 }
+
+/////////////    ShoppingCart icon feedback     //////////////
+
+export function iconFeedback() {
+  return{
+    type: '@ICONFEEDBACK/BOUNCE'
+  }
+}

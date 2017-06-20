@@ -14,8 +14,9 @@ import NavigationContainer from './NavigationContainer';
 
 import {Button,Icon} from 'native-base';
 import {connect} from 'react-redux';
-import {add,minus,add_to_cart} from '../states/order-actions.js';
+import {add,minus,add_to_cart,iconFeedback} from '../states/order-actions.js';
 import * as Animatable from 'react-native-animatable';
+
 
 
 
@@ -53,6 +54,7 @@ class PanCakeList extends React.Component {
 
       func_add_to_cart(id)
       {
+        this.props.dispatch(iconFeedback());
         this.props.dispatch(add_to_cart(id));
         this.forceUpdate();
       }
@@ -176,5 +178,6 @@ var styles = StyleSheet.create({
 });
 
 export default connect(state => ({
-    ...state.order
+    ...state.order,
+    ...state.ShoppingCartIcon
 }))(PanCakeList);

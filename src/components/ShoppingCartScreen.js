@@ -104,9 +104,9 @@ class ShoppingCart extends React.Component {
                                        <Text ><Icon style={{color: 'dimgray'}} name = 'delete' onPress = {() => this.handelDeleteDrink(m.name)}></Icon></Text>
 
                     </View>))}
-                <Text style={styles.text}>Total : {this.total_price}</Text>
+                <Text style={styles.text}>{'\n'}Total : {this.total_price}{'\n'}</Text>
               </View>
-            <View>
+            <View style={{justifyContent: 'center'}}>
               <Text style={{fontFamily: 'monospace'}}>Name</Text>
               <TextInput
                 style={{height: 40, borderColor: 'gray', borderWidth: 1,fontFamily: 'monospace'}}
@@ -114,7 +114,7 @@ class ShoppingCart extends React.Component {
                 value={this.state.input_name}
                 placeholder="Please input your name."
                 placeholderTextColor='grey'
-              />
+              /><Text>{'\n'}</Text>
               <Text style={{fontFamily: 'monospace'}}>Phone number</Text>
               <TextInput
                 style={{height: 40, borderColor: 'gray', borderWidth: 1,fontFamily: 'monospace'}}
@@ -123,7 +123,7 @@ class ShoppingCart extends React.Component {
                 keyboardType='phone-pad'
                 placeholder="Please input your phome number."
                 placeholderTextColor='grey'
-              />
+              /><Text>{'\n'}</Text>
               <Text style={{fontFamily: 'monospace'}}>E-mail</Text>
               <TextInput
                 style={{height: 40, borderColor: 'gray', borderWidth: 1,fontFamily: 'monospace'}}
@@ -145,7 +145,7 @@ class ShoppingCart extends React.Component {
                     {/* <Icon name='rocket' style={styles.icon} /> */}
                     <Text style={{fontFamily: 'monospace'}}>return</Text>
                 </Button>
-                <Button onPress={()=>{AsyncStorage.removeItem('USER').then(value => console.log(value));}}><Text>aaaaaa</Text></Button>
+                <Button block rounded onPress={()=>{AsyncStorage.removeItem('USER').then(value => console.log(value));}}><Text>Delete Records</Text></Button>
               </ParallaxScrollView>
             </NavigationContainer>
         );

@@ -13,7 +13,7 @@ import {search} from './states/search';
 import {toast} from './states/toast';
 import {post, postForm, postItem} from './states/post-reducers';
 
-import {order, order2, record, Intro} from './states/order-reducers';
+import {order, order2, record, Intro, ShoppingCartIcon} from './states/order-reducers';
 
 
 
@@ -78,7 +78,7 @@ const nav = (state = initialState, action) => {
 const store = createStore(combineReducers({
     nav, search, toast,
     post, postForm, postItem,
-    order,order2,record,Intro
+    order,order2,record,Intro,ShoppingCartIcon
 }), compose(applyMiddleware(thunkMiddleware, loggerMiddleware)));
 
 export default class App extends React.Component {

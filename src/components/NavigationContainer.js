@@ -5,8 +5,11 @@ import {Container, Header, Button, Icon, Left, Right, Body, Title, Drawer,Footer
 import SearchButtonWithModal from './SearchButtonWithModal';
 import DrawerSideBar from './DrawerSideBar';
 import appColors from '../styles/colors';
+import * as Animatable from 'react-native-animatable';
+import {iconFeedback} from '../states/order-actions.js';
+import {connect} from 'react-redux'
 
-export default class NavigationContainer extends React.Component {
+class NavigationContainer extends React.Component {
     static propTypes = {
         navigate: PropTypes.func.isRequired,
         title: PropTypes.string.isRequired
@@ -18,7 +21,11 @@ export default class NavigationContainer extends React.Component {
         this.openDrawer = this.openDrawer.bind(this);
         this.closeDrawer = this.closeDrawer.bind(this);
     }
-
+    componentDidUpdate(prevProps, prevState)
+    {
+      if(prevProps.bounce !== this.props.bounce)
+        this.refs.icon.bounce(1500);
+    }
     render() {
         const {title, navigate} = this.props;
         return (
@@ -52,9 +59,9 @@ export default class NavigationContainer extends React.Component {
                                 <Button block transparent style={styles.item}>
                                   <Icon name='phone' style={styles.icon}/>
                                 </Button>
-                                <Button block transparent style={styles.item} onPress={() => navigate('ShoppingCart')}>
+                                <Animatable.View ref="icon"><Button block transparent style={styles.item} onPress={() => navigate('ShoppingCart')}>
                                   <Icon name='cart' style={styles.icon} />
-                                </Button>
+                                </Button></Animatable.View>
                             </FooterTab>
                         </Footer>
                 </Container>
@@ -62,6 +69,10 @@ export default class NavigationContainer extends React.Component {
 
         );
     }
+
+
+
+
 
     openDrawer() {
         this.drawer._root.open();
@@ -100,3 +111,9 @@ const styles = {
         marginBottom: 16
     },
 };
+
+export default connect((state) => {
+    return {
+        ...state.ShoppingCartIcon
+    };
+})(NavigationContainer);

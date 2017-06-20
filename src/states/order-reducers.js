@@ -209,3 +209,19 @@ export function MainButton(state = initMainButtonState,action){
         return state;
   }
 }
+
+const initIconState = {
+  bounce: false
+};
+
+export function ShoppingCartIcon(state = initIconState,action) {
+    switch (action.type) {
+      case '@ICONFEEDBACK/BOUNCE':
+        return{
+          ...state,
+          bounce: !state.bounce
+        };
+      default:
+        return state;
+    }
+}
