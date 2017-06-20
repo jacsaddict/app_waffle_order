@@ -5,6 +5,7 @@ import {
     View,
     ListView,
     AsyncStorage,
+    Image
 } from 'react-native';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
 
@@ -93,38 +94,13 @@ class RecordScreen extends React.Component {
       );
     }
     render() {
-        // const {searchText} = this.props;
         const {navigate} = this.props.navigation;
         const sections = this.sections;
-        // var count = 0;
-        // var temp1 = [];
-        // var temp2 = [];
-        // for(let x=0;x<this.props.records.length;x++)
-        // {
-        //     if(x%2 === 0)
-        //     {
-        //       temp1 = [...temp1,this.props.records[x]];
-        //     }
-        //     else
-        //     {
-        //       temp2 = [...temp2,this.props.records[x]];
-        //     }
-        // }
-
         return (
             <NavigationContainer navigate={navigate} title='Record'>
+              <Image source={require('../images/record6.jpg')} style={styles.image} resizeMode='cover'>
+              </Image>
               <View style={{flex: 9,justifyContent: 'center'}}>
-                  {/* {this.props.records.map((m=>
-                      <View key = {count++} >
-                        <Text style={{height: 20}}></Text>
-                        {m.map((k=>
-                          <Text style={{textAlign: 'center',justifyContent: 'space-between'}} key = {uuid().toString()} id = "list">{k.name} {k.quantity}</Text>
-                      ))}
-                      {(count === 2) && <Button block transparent  onPress={() => this.quick_order(temp1[0],temp2[0])}><Text style={{fontFamily: 'monospace'}}>quick order</Text></Button>}
-                      {(count === 4) && <Button block transparent  onPress={() => this.quick_order(temp1[1],temp2[1])}><Text style={{fontFamily: 'monospace'}}>quick order</Text></Button>}
-                      {(count === 6) && <Button block transparent  onPress={() => this.quick_order(temp1[2],temp2[2])}><Text style={{fontFamily: 'monospace'}}>quick order</Text></Button>}
-                    </View>
-                  ))} */}
                   <Accordion
                     sections={sections}
                     renderHeader={this._renderHeader}
@@ -134,7 +110,6 @@ class RecordScreen extends React.Component {
                   />
             </View>
             <Button block transparent  onPress={() => navigate('Waffle')}>
-                {/* <Icon name='rocket' style={styles.icon} /> */}
                 <Text style={{fontFamily: 'monospace',flex: 1,textAlign: 'center'}}>return</Text>
             </Button>
             </NavigationContainer>
@@ -170,6 +145,9 @@ const styles = {
     contentText:{
         textAlign: "center",
         fontFamily: "monospace"
+    },
+    image:{
+    opacity:0.7
     }
 }
 

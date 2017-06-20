@@ -9,6 +9,7 @@ import {
     ScrollView,
     StyleSheet,
     AsyncStorage,
+    Image
 } from 'react-native';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
 
@@ -22,6 +23,9 @@ import PanCakeList from './PanCakeList.js';
 import DrinkList from './DrinkList.js';
 import {delete_from_cart_pancake,delete_from_cart_drink,submit} from '../states/order-actions.js';
 import uuid from 'uuid';
+import * as Animatable from 'react-native-animatable';
+import ParallaxScrollView from 'react-native-parallax-scroll-view';
+
 
 class ShoppingCart extends React.Component {
 
@@ -63,9 +67,14 @@ class ShoppingCart extends React.Component {
 
         return (
             <NavigationContainer navigate={navigate} title='ShoppingCart'>
-              <ScrollView>
-              <View style={styles.mainbox}>
-
+                <ParallaxScrollView
+                               backgroundColor="#ffffff"
+                               contentBackgroundColor="#ffffff"
+                               parallaxHeaderHeight={300}
+                               renderForeground={() => (
+                                 <Image source={require('../images/checkout3.jpg')} style={styles.image} resizeMode='cover'>
+                                 </Image>
+                               )}>
                 <View style={styles.rowContainer}>
                     <Text  style={[styles.itemname_title,styles.text]}>items</Text>
                     <Text style={styles.text}>#</Text>
@@ -73,30 +82,30 @@ class ShoppingCart extends React.Component {
                     <Text style={styles.text}>total</Text>
                     <Text style={styles.title1}></Text>
                 </View>
+                <View style={styles.mainbox}>
+                  {this.props.present.map((m=>
+                    <View key = {m.name} style={styles.rowContainer}>
+                                       <Text style={styles.itemname}>{m.name}</Text>
+                                       <Text style = {styles.quantity}>{m.quantity}</Text>
+                                       <Text style = {styles.quantity}>{m.price}</Text>
+                                       <Text style = {styles.quantity2}>{m.quantity * m.price}</Text>
+                                       <Text ><Icon style={{color: 'dimgray'}} name = 'delete' onPress = {() => this.handelDelete(m.name)}></Icon></Text>
 
-              {this.props.present.map((m=>
-                <View key = {m.name} style={styles.rowContainer}>
-                                   <Text style={styles.itemname}>{m.name}</Text>
-                                   <Text style = {styles.quantity}>{m.quantity}</Text>
-                                   <Text style = {styles.quantity}>{m.price}</Text>
-                                   <Text style = {styles.quantity2}>{m.quantity * m.price}</Text>
-                                   <Text ><Icon style={{color: 'dimgray'}} name = 'delete' onPress = {() => this.handelDelete(m.name)}></Icon></Text>
-
-                </View>))}
+                    </View>))}
 
 
 
-              {this.props.present2.map((m=>
-                <View  key = {m.name} style={styles.rowContainer}>
-                                   <Text style={styles.itemname}>{m.name}</Text>
-                                   <Text style = {styles.quantity}>{m.quantity}</Text>
-                                   <Text style = {styles.quantity}>{m.price}</Text>
-                                   <Text style = {styles.quantity2}>{m.quantity * m.price}</Text>
-                                   <Text ><Icon style={{color: 'dimgray'}} name = 'delete' onPress = {() => this.handelDeleteDrink(m.name)}></Icon></Text>
+                  {this.props.present2.map((m=>
+                    <View  key = {m.name} style={styles.rowContainer}>
+                                       <Text style={styles.itemname}>{m.name}</Text>
+                                       <Text style = {styles.quantity}>{m.quantity}</Text>
+                                       <Text style = {styles.quantity}>{m.price}</Text>
+                                       <Text style = {styles.quantity2}>{m.quantity * m.price}</Text>
+                                       <Text ><Icon style={{color: 'dimgray'}} name = 'delete' onPress = {() => this.handelDeleteDrink(m.name)}></Icon></Text>
 
-                </View>))}
+                    </View>))}
                 <Text style={styles.text}>Total : {this.total_price}</Text>
-            </View>
+              </View>
             <View>
               <Text style={{fontFamily: 'monospace'}}>Name</Text>
               <TextInput
@@ -127,17 +136,17 @@ class ShoppingCart extends React.Component {
             </View>
 
 
-              </ScrollView>
-              <Button block transparent  onPress = {() => {this.handelSubmit();this.handleUser(userid ,this.state.input_name, this.state.input_email);}} ><Text style={{fontFamily: 'monospace'}}>submit</Text></Button>
-              <Button block transparent  onPress={() => {this.handelAdd(this.props.present,this.props.present2,this.state.input_name,this.state.input_phone,this.state.input_email,this.state.input_time);}}>
-                  {/* <Icon name='rocket' style={styles.icon} /> */}
-                  <Text style={{fontFamily: 'monospace'}}>add to record</Text>
-              </Button>
-              <Button block transparent  onPress={() => navigate('Waffle')}>
-                  {/* <Icon name='rocket' style={styles.icon} /> */}
-                  <Text style={{fontFamily: 'monospace'}}>return</Text>
-              </Button>
-              <Button onPress={()=>{AsyncStorage.removeItem('USER').then(value => console.log(value));}}><Text>aaaaaa</Text></Button>
+            <Animatable.View ref="submit"><Button  block transparent onPress = {this.handelSubmit} ><Text style={{fontFamily: 'monospace'}}>submit</Text></Button></Animatable.View>
+                <Button block transparent  onPress={() => {this.handelAdd(this.props.present,this.props.present2,this.state.input_name,this.state.input_phone,this.state.input_email,this.state.input_time);}}>
+                    {/* <Icon name='rocket' style={styles.icon} /> */}
+                    <Text style={{fontFamily: 'monospace'}}>add to record</Text>
+                </Button>
+                <Button block transparent  onPress={() => navigate('Waffle')}>
+                    {/* <Icon name='rocket' style={styles.icon} /> */}
+                    <Text style={{fontFamily: 'monospace'}}>return</Text>
+                </Button>
+                <Button onPress={()=>{AsyncStorage.removeItem('USER').then(value => console.log(value));}}><Text>aaaaaa</Text></Button>
+              </ParallaxScrollView>
             </NavigationContainer>
         );
     }
@@ -179,6 +188,7 @@ class ShoppingCart extends React.Component {
         this.setState({
           danger_name : true
         });
+        this.refs.submit.shake(600);
         Alert.alert(
           '請輸入姓名',
           '姓名為點餐用',
@@ -193,6 +203,7 @@ class ShoppingCart extends React.Component {
         this.setState({
           danger_phone : true
         });
+        this.refs.submit.shake(600);
         Alert.alert(
           '請輸入電話',
           '電話為點餐用',
@@ -207,6 +218,7 @@ class ShoppingCart extends React.Component {
         this.setState({
           danger_email: true
         });
+        this.refs.submit.shake(600);
         Alert.alert(
           '請輸入e-mail',
           'e-mail為點餐用',
@@ -232,6 +244,8 @@ class ShoppingCart extends React.Component {
         input_phone: '',
         input_email: ''
       });
+      this.props.dispatch(clear_pancake());
+      this.props.dispatch(clear_drink());
     }
 
 }
@@ -301,6 +315,9 @@ class ShoppingCart extends React.Component {
         opacity : 1,
         flex: 1,
         fontFamily: 'monospace'
+      },
+      image:{
+        opacity:0.7
       }
     });
 

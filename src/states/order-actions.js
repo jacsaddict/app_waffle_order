@@ -107,6 +107,13 @@ export function submit(p1,p2,name,phone,email,time){
 }
 
 
+/////////////    Intro          //////////////
+export function intro_close(){
+    return{
+      type: '@INTRO/INTROCLOSE'
+    }
+}
+
 
 /////////////    MainButton     //////////////
 

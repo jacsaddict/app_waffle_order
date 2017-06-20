@@ -16,6 +16,7 @@ import NavigationContainer from './NavigationContainer';
 
 import {Button} from 'native-base';
 import {connect} from 'react-redux';
+import Example from './Intro.js';
 
 class WaffleScreen extends React.Component {
     static propTypes = {
@@ -29,8 +30,11 @@ class WaffleScreen extends React.Component {
 
     render() {
         // const {searchText} = this.props;
+
         const {navigate} = this.props.navigation;
         return (
+          this.props.show_intro===1 ?
+          <Example/> :
             <NavigationContainer navigate={navigate} title='Waffle'>
               <View style={{flex: 4, justifyContent: 'center'}}>
                   <Swiper
@@ -71,4 +75,5 @@ const styles = StyleSheet.create({
 
 export default connect(state => ({
     searchText: state.search.searchText,
+    ...state.Intro
 }))(WaffleScreen);
