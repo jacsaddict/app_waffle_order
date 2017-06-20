@@ -90,7 +90,8 @@ class RecordScreen extends React.Component {
               <Text  style={{height: 7}}>{'\n'}</Text>
             </View>
           ))}
-          {section.content.length>0 && <Button rounded style={{width: 150,alignSelf: 'center'}}  onPress={() => this.quick_order(section.content)}><Text style={{textAlign: 'center'}}>Quick Order</Text></Button>}
+          {section.content.length>0 && <Button rounded style={{alignSelf: 'center'}}  onPress={() => this.quick_order(section.content)}><Text style={{textAlign: 'center'}}>Quick Order</Text></Button>}
+          <Text  style={{height: 7}}>{'\n'}</Text>
         </View>
       );
     }

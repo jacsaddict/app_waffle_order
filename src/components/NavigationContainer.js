@@ -22,7 +22,7 @@ class NavigationContainer extends React.Component {
     componentDidUpdate(prevProps, prevState)
     {
       if(prevProps.bounce !== this.props.bounce)
-        this.refs.icon.bounce(1500);
+        this.refs.icon.bounce(800);
     }
     render() {
         const {title, navigate} = this.props;
