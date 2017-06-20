@@ -67,7 +67,10 @@ class DrinkItem extends React.Component {
                   {this.props.item2[0]}
                 </Text>
                 <Text>
-                  {this.props.price2[0]}元
+                  {this.props.price2[0]}
+                </Text>
+                <Text>
+                    元
                 </Text>
                 <Button small onPress={() => this.func_minus(0)}><Text>-</Text></Button>
                 <Text style = {styles.quantity}>
@@ -84,7 +87,10 @@ class DrinkItem extends React.Component {
                   {this.props.item2[1]}
                 </Text>
                 <Text>
-                  {this.props.price2[1]}元
+                  {this.props.price2[1]}
+                </Text>
+                <Text>
+                    元
                 </Text>
                 <Button small onPress={() => this.func_minus(1)}><Text>-</Text></Button>
                 <Text style = {styles.quantity}>
@@ -101,7 +107,10 @@ class DrinkItem extends React.Component {
                   {this.props.item2[2]}
                 </Text>
                 <Text>
-                  {this.props.price2[2]}元
+                  {this.props.price2[2]}
+                </Text>
+                <Text>
+                    元
                 </Text>
                 <Button small onPress={() => this.func_minus(2)}><Text>-</Text></Button>
                 <Text style = {styles.quantity}>

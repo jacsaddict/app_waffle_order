@@ -21,7 +21,7 @@ import {Button,Icon} from 'native-base';
 import {connect} from 'react-redux';
 import PanCakeList from './PanCakeList.js';
 import DrinkList from './DrinkList.js';
-import {delete_from_cart_pancake,delete_from_cart_drink,submit} from '../states/order-actions.js';
+import {delete_from_cart_pancake,delete_from_cart_drink,submit,clear_pancake,clear_drink} from '../states/order-actions.js';
 import uuid from 'uuid';
 import * as Animatable from 'react-native-animatable';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
