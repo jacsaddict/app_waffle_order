@@ -7,6 +7,7 @@ import appColors from '../styles/colors';
 import * as Animatable from 'react-native-animatable';
 import {iconFeedback} from '../states/order-actions.js';
 import {connect} from 'react-redux'
+import IconBadge from 'react-native-icon-badge';
 
 class NavigationContainer extends React.Component {
     static propTypes = {
@@ -43,7 +44,24 @@ class NavigationContainer extends React.Component {
                                   <Icon name='phone' style={styles.icon}/>
                                 </Button>
                                 <Animatable.View ref="icon"><Button   style={styles.item} onPress={() => navigate('ShoppingCart')}>
-                                    <Icon name='cart' style={{color: appColors.primaryLightText,flex:1}} />
+                                    {/* <Icon name='cart' style={{color: appColors.primaryLightText,flex:1}} /> */}
+                                    {this.props.present.length+this.props.present2.length > 0 ?
+                                    <IconBadge
+                                        MainElement={
+                                          <Icon name='cart' style={{color: appColors.primaryLightText}} />
+                                        }
+                                        BadgeElement={
+                                          <Text style={{color:'#FFFFFF'}}>{this.props.present.length+this.props.present2.length}</Text>
+                                        }
+
+                                        IconBadgeStyle={
+                                          {width:17,
+                                          height:17,
+                                          top:-8,
+                                          right: -0.6,
+                                          backgroundColor: '#E32636'}
+                                        }
+                                      /> : <Icon name='cart' style={{color: appColors.primaryLightText,flex:1}} />}
                                 </Button></Animatable.View>
                             </FooterTab>
                         </Footer>
