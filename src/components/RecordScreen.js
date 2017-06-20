@@ -16,7 +16,7 @@ import uuid from 'uuid';
 import {Button} from 'native-base';
 import {connect} from 'react-redux';
 
-import {q_order_pancake,q_order_drink} from '../states/order-actions.js';
+import {q_order_pancake,q_order_drink,iconFeedback} from '../states/order-actions.js';
 import {listOrder} from '../api/order.js';
 import Accordion from 'react-native-collapsible/Accordion';
 
@@ -41,6 +41,7 @@ class RecordScreen extends React.Component {
     }
     async componentDidMount(){
         const value = await AsyncStorage.getItem('USER');
+        console.log(value);
         let user = JSON.parse(value);
         await listOrder(user.userid, user.name, user.email).then(function(res) {
             reqRcords = res;
@@ -84,12 +85,12 @@ class RecordScreen extends React.Component {
       return (
         <View style={styles.content}>
           {section.content.map((m =>
-            <View key={JSON.parse(m).name} style={styles.content} >
+            <View key={JSON.parse(m).name} style={styles.innercontent} >
               <Text  style={styles.contentText}>{JSON.parse(m).name}{"  "}{JSON.parse(m).quantity}</Text>
-              <Text  style={styles.contentText}>{'\n'}</Text>
+              <Text>{'\n'}</Text>
             </View>
           ))}
-          {section.content.length>0 && <Button onPress={() => this.quick_order(section.content)}><Text>Quick Order</Text></Button>}
+          {section.content.length>0 && <Button rounded block onPress={() => this.quick_order(section.content)}><Text style={{textAlign: 'center'}}>Quick Order</Text></Button>}
         </View>
       );
     }
@@ -121,12 +122,10 @@ class RecordScreen extends React.Component {
 
     quick_order(content)
     {
-      console.log(content.toString());
       var temp = JSON.parse("["+content.toString()+"]");
-      console.log(content);
-      console.log(temp);
       this.props.dispatch(q_order_pancake(temp));
       this.props.dispatch(q_order_drink(temp));
+      this.props.dispatch(iconFeedback());
     }
 }
 
@@ -135,19 +134,25 @@ const styles = {
         justifyContent: 'center',
     },
     headerText:{
-        fontSize: 21,
+        fontSize: 18,
         fontFamily: "monospace",
         textAlign: "center"
     },
     content:{
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    innercontent:{
+      justifyContent: 'center',
+      alignItems: 'stretch'
     },
     contentText:{
         textAlign: "center",
         fontFamily: "monospace"
     },
     image:{
-    opacity:0.7
+    opacity:0.7,
+    flex: 7
     }
 }
 
@@ -158,6 +163,7 @@ export default connect((state) => {
     return {
         ...state.order,
         ...state.order2,
-        ...state.record
+        ...state.record,
+        ...state.ShoppingCartIcon
     };
 })(RecordScreen);

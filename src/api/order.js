@@ -1,8 +1,8 @@
 //developing
 // const postBaseUrl = 'http://localhost:3000/api';
-const postBaseUrl = 'http://172.20.137.183:3000/api';
+//const postBaseUrl = 'http://172.20.137.183:3000/api';
 //developing
-//const postBaseUrl = 'http://waffle-dev.us-west-2.elasticbeanstalk.com/api';
+const postBaseUrl = 'http://server-dev-7.us-west-2.elasticbeanstalk.com/api';
 
 export function CreateOrder(name, email, phone, time, products, products_pan, products_drinck,total_price) {
     let url = `${postBaseUrl}/orders`;

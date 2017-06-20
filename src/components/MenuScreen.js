@@ -24,10 +24,7 @@ import * as Animatable from 'react-native-animatable';
 
 
 export default class MenuScreen extends React.Component {
-    // static propTypes = {
-    //     navigation: PropTypes.object.isRequired,
-    //     // searchText: PropTypes.string.isRequired
-    // };
+
 
     constructor(props) {
 
@@ -42,7 +39,6 @@ export default class MenuScreen extends React.Component {
     }
 
     render() {
-        // const {searchText} = this.props;
         const {navigate} = this.props.navigation;
         return (
             <NavigationContainer navigate={navigate} title='Menu'>
@@ -109,10 +105,9 @@ export default class MenuScreen extends React.Component {
 }
 const styles = {
   image:{
-    // opacity:0.8,
     width: undefined,
     height: undefined,
-    flex: 0.75
+    flex: 0.6
   },
   store:{
 

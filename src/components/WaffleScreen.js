@@ -21,7 +21,6 @@ import Example from './Intro.js';
 class WaffleScreen extends React.Component {
     static propTypes = {
         navigation: PropTypes.object.isRequired,
-        // searchText: PropTypes.string.isRequired
     };
 
     constructor(props) {
@@ -35,7 +34,7 @@ class WaffleScreen extends React.Component {
         return (
           this.props.show_intro===1 ?
           <Example/> :
-            <NavigationContainer navigate={navigate} title='Waffle'>
+            <NavigationContainer navigate={navigate} title='Home'>
               <View style={{flex: 4, justifyContent: 'center'}}>
                   <Swiper
                     horizontal={true}

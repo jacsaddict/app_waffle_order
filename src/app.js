@@ -18,9 +18,7 @@ import {order, order2, record, Intro, ShoppingCartIcon} from './states/order-red
 
 
 import {StackNavigator, NavigationActions, addNavigationHelpers} from 'react-navigation';
-import TodayScreen from './components/TodayScreen';
-import PostFormScreen from './components/PostFormScreen';
-import ForecastScreen from './components/ForecastScreen';
+
 import WaffleScreen from './components/WaffleScreen';
 import MenuScreen from './components/MenuScreen';
 import ShoppingCartScreen from './components/ShoppingCartScreen';

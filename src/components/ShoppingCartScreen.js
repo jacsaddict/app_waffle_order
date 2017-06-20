@@ -84,7 +84,7 @@ class ShoppingCart extends React.Component {
                 </View>
                 <View style={styles.mainbox}>
                   {this.props.present.map((m=>
-                    <View key = {m.name} style={styles.rowContainer}>
+                    <View key = {m.name} style={styles.rowContainer} >
                                        <Text style={styles.itemname}>{m.name}</Text>
                                        <Text style = {styles.quantity}>{m.quantity}</Text>
                                        <Text style = {styles.quantity}>{m.price}</Text>
@@ -136,7 +136,7 @@ class ShoppingCart extends React.Component {
             </View>
 
 
-            <Animatable.View ref="submit"><Button  block transparent onPress = {this.handelSubmit} ><Text style={{fontFamily: 'monospace'}}>submit</Text></Button></Animatable.View>
+            <Animatable.View ref="submit"><Button  block transparent onPress = {() => {this.handelSubmit(); this.handleUser(userid,this.state.input_name,this.state.input_email)}} ><Text style={{fontFamily: 'monospace'}}>submit</Text></Button></Animatable.View>
                 <Button block transparent  onPress={() => {this.handelAdd(this.props.present,this.props.present2,this.state.input_name,this.state.input_phone,this.state.input_email,this.state.input_time);}}>
                     {/* <Icon name='rocket' style={styles.icon} /> */}
                     <Text style={{fontFamily: 'monospace'}}>add to record</Text>
