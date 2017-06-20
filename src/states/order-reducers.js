@@ -1,4 +1,4 @@
-import uuid from 'uuid/v4';
+import uuid from 'uuid';
 
 const initOrderState = {
     item :["原味鬆餅","巧克力鬆餅","抹茶鬆餅","花生鬆餅"],
@@ -31,7 +31,8 @@ export function order(state = initOrderState, action){
           {
             UpdatPresent.push({name:state.item[action.id],
                                 quantity:state.quantity[action.id],
-                              price:state.price[action.id]});
+                                price:state.price[action.id],
+                                id: uuid()});
           }
             return{
               ...state,
@@ -105,7 +106,8 @@ export function order2(state = initOrderState2, action){
           state.present2 = [...state.present2,
                               {name:state.item2[action.id],
                               quantity:state.quantity2[action.id],
-                              price:state.price2[action.id]}];
+                              price:state.price2[action.id],
+                              id: uuid()}];
         }
 
           return{

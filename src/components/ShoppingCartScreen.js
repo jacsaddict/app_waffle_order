@@ -85,26 +85,26 @@ class ShoppingCart extends React.Component {
                 </View>
                 <View style={styles.mainbox}>
                   {this.props.present.map((m=>
-                    <View key = {m.name} style={styles.rowContainer} >
+                    <Animatable.View key = {m.name} style={styles.rowContainer} ref={(m.id).toString()}>
                                        <Text style={styles.itemname}>{m.name}</Text>
                                        <Text style = {styles.quantity}>{m.quantity}</Text>
                                        <Text style = {styles.quantity}>{m.price}</Text>
                                        <Text style = {styles.quantity2}>{m.quantity * m.price}</Text>
-                                       <Text ><Icon style={{color: 'dimgray'}} name = 'delete' onPress = {() => this.handelDelete(m.name)}></Icon></Text>
+                                       <Text ><Icon style={{color: 'dimgray'}} name = 'delete' onPress = {() => this.handelDelete(m.name,m.id)}></Icon></Text>
 
-                    </View>))}
+                    </Animatable.View>))}
 
 
 
                   {this.props.present2.map((m=>
-                    <View  key = {m.name} style={styles.rowContainer}>
+                    <Animatable.View  key = {m.name} style={styles.rowContainer} ref={(m.id).toString()}>
                                        <Text style={styles.itemname}>{m.name}</Text>
                                        <Text style = {styles.quantity}>{m.quantity}</Text>
                                        <Text style = {styles.quantity}>{m.price}</Text>
                                        <Text style = {styles.quantity2}>{m.quantity * m.price}</Text>
-                                       <Text ><Icon style={{color: 'dimgray'}} name = 'delete' onPress = {() => this.handelDeleteDrink(m.name)}></Icon></Text>
+                                       <Text ><Icon style={{color: 'dimgray'}} name = 'delete' onPress = {() => this.handelDeleteDrink(m.name,m.id)}></Icon></Text>
 
-                    </View>))}
+                    </Animatable.View>))}
                 <Text style={styles.text}>{'\n'}Total : {this.total_price}{'\n'}</Text>
               </View>
             <View style={{justifyContent: 'center'}}>
@@ -178,11 +178,14 @@ class ShoppingCart extends React.Component {
     }
 
 
-    handelDelete(item){
+    async handelDelete(item,id){
+      //console.log(this.refs);
+      await this.refs[id.toString()].fadeOutRight(400);
       this.props.dispatch(delete_from_cart_pancake(item));
     }
 
-    handelDeleteDrink(item){
+    async handelDeleteDrink(item,id){
+      await this.refs[id.toString()].fadeOutRight(400);
       this.props.dispatch(delete_from_cart_drink(item));
     }
     handelSubmit(){
