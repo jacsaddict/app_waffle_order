@@ -9,8 +9,10 @@ import {
     ScrollView,
     StyleSheet,
     AsyncStorage,
+    Image
 } from 'react-native';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
+
 
 import {Content} from 'native-base';
 import NavigationContainer from './NavigationContainer';
@@ -20,8 +22,11 @@ import {Button,Icon} from 'native-base';
 import {connect} from 'react-redux';
 import PanCakeList from './PanCakeList.js';
 import DrinkList from './DrinkList.js';
-import {delete_from_cart_pancake,delete_from_cart_drink,submit} from '../states/order-actions.js';
+import {delete_from_cart_pancake,delete_from_cart_drink,submit,clear_pancake,clear_drink} from '../states/order-actions.js';
 import uuid from 'uuid';
+import * as Animatable from 'react-native-animatable';
+import ParallaxScrollView from 'react-native-parallax-scroll-view';
+
 
 class ShoppingCart extends React.Component {
 
@@ -63,81 +68,91 @@ class ShoppingCart extends React.Component {
 
         return (
             <NavigationContainer navigate={navigate} title='ShoppingCart'>
-              <ScrollView>
-              <View style={styles.mainbox}>
-
+                <ParallaxScrollView
+                               backgroundColor="#ffffff"
+                               contentBackgroundColor="#ffffff"
+                               parallaxHeaderHeight={300}
+                               renderForeground={() => (
+                                 <Image source={require('../images/checkout3.jpg')} style={styles.image} resizeMode='cover'>
+                                 </Image>
+                               )}>
                 <View style={styles.rowContainer}>
-                    <Text  style={[styles.itemname_title,styles.text]}>items</Text>
+                    <Text  style={[styles.itemname_title,styles.text]}>Items</Text>
                     <Text style={styles.text}>#</Text>
                     <Text style={styles.text}>$</Text>
                     <Text style={styles.text}>total</Text>
                     <Text style={styles.title1}></Text>
                 </View>
+                <View style={styles.mainbox}>
+                  {this.props.present.map((m=>
+                    <Animatable.View key = {m.name} style={styles.rowContainer} ref={(m.id).toString()}>
+                                       <Text style={styles.itemname}>{m.name}</Text>
+                                       <Text style = {styles.quantity}>{m.quantity}</Text>
+                                       <Text style = {styles.quantity}>{m.price}</Text>
+                                       <Text style = {styles.quantity2}>{m.quantity * m.price}</Text>
+                                       <Text ><Icon style={{color: 'dimgray'}} name = 'delete' onPress = {() => this.handelDelete(m.name,m.id)}></Icon></Text>
 
-              {this.props.present.map((m=>
-                <View key = {m.name} style={styles.rowContainer}>
-                                   <Text style={styles.itemname}>{m.name}</Text>
-                                   <Text style = {styles.quantity}>{m.quantity}</Text>
-                                   <Text style = {styles.quantity}>{m.price}</Text>
-                                   <Text style = {styles.quantity2}>{m.quantity * m.price}</Text>
-                                   <Text ><Icon style={{color: 'dimgray'}} name = 'delete' onPress = {() => this.handelDelete(m.name)}></Icon></Text>
-
-                </View>))}
+                    </Animatable.View>))}
 
 
 
-              {this.props.present2.map((m=>
-                <View  key = {m.name} style={styles.rowContainer}>
-                                   <Text style={styles.itemname}>{m.name}</Text>
-                                   <Text style = {styles.quantity}>{m.quantity}</Text>
-                                   <Text style = {styles.quantity}>{m.price}</Text>
-                                   <Text style = {styles.quantity2}>{m.quantity * m.price}</Text>
-                                   <Text ><Icon style={{color: 'dimgray'}} name = 'delete' onPress = {() => this.handelDeleteDrink(m.name)}></Icon></Text>
+                  {this.props.present2.map((m=>
+                    <Animatable.View  key = {m.name} style={styles.rowContainer} ref={(m.id).toString()}>
+                                       <Text style={styles.itemname}>{m.name}</Text>
+                                       <Text style = {styles.quantity}>{m.quantity}</Text>
+                                       <Text style = {styles.quantity}>{m.price}</Text>
+                                       <Text style = {styles.quantity2}>{m.quantity * m.price}</Text>
+                                       <Text ><Icon style={{color: 'dimgray'}} name = 'delete' onPress = {() => this.handelDeleteDrink(m.name,m.id)}></Icon></Text>
 
-                </View>))}
-                <Text style={styles.text}>Total : {this.total_price}</Text>
-            </View>
-            <View>
-              <Text style={{fontFamily: 'monospace'}}>Name</Text>
+                    </Animatable.View>))}
+                <Text style={styles.text}>{'\n'}Total : {this.total_price}{'\n'}</Text>
+              </View>
+            <View style={{justifyContent: 'center'}}>
+              <Text style={{fontFamily: 'monospace',color: '#444',fontWeight:'bold'}}>{"  "}Name</Text>
               <TextInput
-                style={{height: 40, borderColor: 'gray', borderWidth: 1,fontFamily: 'monospace'}}
+                style={{height: 40, borderColor: 'grey', borderWidth: 1,fontFamily: 'monospace',borderRadius: 8}}
                 onChangeText={(input_name) => this.setState({input_name})}
                 value={this.state.input_name}
-                placeholder="Please input your name."
+                placeholder=" Please input your name."
                 placeholderTextColor='grey'
-              />
-              <Text style={{fontFamily: 'monospace'}}>Phone number</Text>
+                underlineColorAndroid='#108838'
+              /><Text>{'\n'}</Text>
+              <Text style={{fontFamily: 'monospace',color: '#444',fontWeight:'bold'}}>{"  "}Phone number</Text>
               <TextInput
-                style={{height: 40, borderColor: 'gray', borderWidth: 1,fontFamily: 'monospace'}}
+                style={{height: 40, borderColor: 'gray', borderWidth: 1,fontFamily: 'monospace',borderRadius: 8}}
                 onChangeText={(input_phone) => this.setState({input_phone})}
                 value={this.state.input_phone}
                 keyboardType='phone-pad'
-                placeholder="Please input your phome number."
+                placeholder=" Please input your phome number."
                 placeholderTextColor='grey'
-              />
-              <Text style={{fontFamily: 'monospace'}}>E-mail</Text>
+                underlineColorAndroid='#108838'
+
+              /><Text>{'\n'}</Text>
+              <Text style={{fontFamily: 'monospace',color: '#444',fontWeight:'bold'}}>{"  "}E-mail</Text>
               <TextInput
-                style={{height: 40, borderColor: 'gray', borderWidth: 1,fontFamily: 'monospace'}}
+                style={{height: 40, borderColor: 'gray', borderWidth: 1,fontFamily: 'monospace',borderRadius: 8}}
                 onChangeText={(input_email) => this.setState({input_email})}
                 value={this.state.input_email}
                 keyboardType='email-address'
-                placeholder="Please input your e-mail."
+                placeholder=" Please input your e-mail."
                 placeholderTextColor='grey'
+                underlineColorAndroid='#108838'
+
               />
             </View>
 
 
-              </ScrollView>
-              <Button block transparent  onPress = {() => {this.handelSubmit();this.handleUser(userid ,this.state.input_name, this.state.input_email);}} ><Text style={{fontFamily: 'monospace'}}>submit</Text></Button>
-              <Button block transparent  onPress={() => {this.handelAdd(this.props.present,this.props.present2,this.state.input_name,this.state.input_phone,this.state.input_email,this.state.input_time);}}>
-                  {/* <Icon name='rocket' style={styles.icon} /> */}
-                  <Text style={{fontFamily: 'monospace'}}>add to record</Text>
-              </Button>
-              <Button block transparent  onPress={() => navigate('Waffle')}>
-                  {/* <Icon name='rocket' style={styles.icon} /> */}
-                  <Text style={{fontFamily: 'monospace'}}>return</Text>
-              </Button>
-              <Button onPress={()=>{AsyncStorage.removeItem('USER').then(value => console.log(value));}}><Text>aaaaaa</Text></Button>
+            <Animatable.View ref="submit"><Button  block transparent onPress = {() => {this.handelSubmit(); this.handleUser(userid,this.state.input_name,this.state.input_email)}} ><Text style={{fontFamily: 'monospace'}}>submit</Text></Button></Animatable.View>
+                <Button block transparent  onPress={() => {this.handelAdd(this.props.present,this.props.present2,this.state.input_name,this.state.input_phone,this.state.input_email,this.state.input_time);}}>
+                    {/* <Icon name='rocket' style={styles.icon} /> */}
+                    <Text style={{fontFamily: 'monospace'}}>Add to record</Text>
+                </Button>
+                <Button block transparent  onPress={() => navigate('Waffle')}>
+                    {/* <Icon name='rocket' style={styles.icon} /> */}
+                    <Text style={{fontFamily: 'monospace'}}>Return</Text>
+                </Button>
+                <Button block rounded onPress={()=>{AsyncStorage.removeItem('USER').then(value => console.log(value));}}><Text>Delete Records</Text></Button>
+              </ParallaxScrollView>
             </NavigationContainer>
         );
     }
@@ -167,11 +182,14 @@ class ShoppingCart extends React.Component {
     }
 
 
-    handelDelete(item){
+    async handelDelete(item,id){
+      //console.log(this.refs);
+      await this.refs[id.toString()].fadeOutRight(400);
       this.props.dispatch(delete_from_cart_pancake(item));
     }
 
-    handelDeleteDrink(item){
+    async handelDeleteDrink(item,id){
+      await this.refs[id.toString()].fadeOutRight(400);
       this.props.dispatch(delete_from_cart_drink(item));
     }
     handelSubmit(){
@@ -179,6 +197,7 @@ class ShoppingCart extends React.Component {
         this.setState({
           danger_name : true
         });
+        this.refs.submit.shake(600);
         Alert.alert(
           '請輸入姓名',
           '姓名為點餐用',
@@ -193,6 +212,7 @@ class ShoppingCart extends React.Component {
         this.setState({
           danger_phone : true
         });
+        this.refs.submit.shake(600);
         Alert.alert(
           '請輸入電話',
           '電話為點餐用',
@@ -207,6 +227,7 @@ class ShoppingCart extends React.Component {
         this.setState({
           danger_email: true
         });
+        this.refs.submit.shake(600);
         Alert.alert(
           '請輸入e-mail',
           'e-mail為點餐用',
@@ -227,11 +248,21 @@ class ShoppingCart extends React.Component {
                   this.props.present2,
                   this.total_price
                 );
+      Alert.alert(
+        '成功',
+        '您已經送出訂單',
+        [
+          {text: '好', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
       this.setState({
         input_name: '',
         input_phone: '',
         input_email: ''
       });
+      this.props.dispatch(clear_pancake());
+      this.props.dispatch(clear_drink());
     }
 
 }
@@ -301,6 +332,9 @@ class ShoppingCart extends React.Component {
         opacity : 1,
         flex: 1,
         fontFamily: 'monospace'
+      },
+      image:{
+        opacity:0.7
       }
     });
 

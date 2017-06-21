@@ -14,7 +14,7 @@ import NavigationContainer from './NavigationContainer';
 
 import {Button,Icon} from 'native-base';
 import {connect} from 'react-redux';
-import {add_drink,minus_drink,add_to_cart_drink} from '../states/order-actions.js';
+import {add_drink,minus_drink,add_to_cart_drink,iconFeedback} from '../states/order-actions.js';
 import * as Animatable from 'react-native-animatable';
 
 
@@ -51,6 +51,7 @@ class DrinkItem extends React.Component {
       }
       func_add_to_cart(id)
       {
+          this.props.dispatch(iconFeedback());
           this.props.dispatch(add_to_cart_drink(id));
           this.forceUpdate();
       }
@@ -67,7 +68,10 @@ class DrinkItem extends React.Component {
                   {this.props.item2[0]}
                 </Text>
                 <Text>
-                  {this.props.price2[0]}元
+                  {this.props.price2[0]}
+                </Text>
+                <Text>
+                    元
                 </Text>
                 <Button small onPress={() => this.func_minus(0)}><Text>-</Text></Button>
                 <Text style = {styles.quantity}>
@@ -84,7 +88,10 @@ class DrinkItem extends React.Component {
                   {this.props.item2[1]}
                 </Text>
                 <Text>
-                  {this.props.price2[1]}元
+                  {this.props.price2[1]}
+                </Text>
+                <Text>
+                    元
                 </Text>
                 <Button small onPress={() => this.func_minus(1)}><Text>-</Text></Button>
                 <Text style = {styles.quantity}>
@@ -101,7 +108,10 @@ class DrinkItem extends React.Component {
                   {this.props.item2[2]}
                 </Text>
                 <Text>
-                  {this.props.price2[2]}元
+                  {this.props.price2[2]}
+                </Text>
+                <Text>
+                    元
                 </Text>
                 <Button small onPress={() => this.func_minus(2)}><Text>-</Text></Button>
                 <Text style = {styles.quantity}>
@@ -161,5 +171,6 @@ var styles = StyleSheet.create({
 });
 
 export default connect(state => ({
-    ...state.order2
+    ...state.order2,
+    ...state.ShoppingCartIcon
 }))(DrinkItem);

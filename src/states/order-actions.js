@@ -107,6 +107,13 @@ export function submit(p1,p2,name,phone,email,time){
 }
 
 
+/////////////    Intro          //////////////
+export function intro_close(){
+    return{
+      type: '@INTRO/INTROCLOSE'
+    }
+}
+
 
 /////////////    MainButton     //////////////
 
@@ -114,4 +121,12 @@ export function main_display(){
     return{
       type: '@MAINBUTTON/MAINDISPLAY'
     }
+}
+
+/////////////    ShoppingCart icon feedback     //////////////
+
+export function iconFeedback() {
+  return{
+    type: '@ICONFEEDBACK/BOUNCE'
+  }
 }

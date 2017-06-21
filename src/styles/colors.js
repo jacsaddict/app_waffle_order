@@ -14,5 +14,6 @@ export default appColors = {
     text: '#666',
     textLight: '#bcbcbc',
     mask: 'rgba(0, 0, 0, 0.5)',
-    buttonColor: 'rgb(255, 144, 26)'
+    buttonColor: 'rgb(255, 144, 26)',
+    pizzColor: '#000080'
 };

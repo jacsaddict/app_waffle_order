@@ -1,4 +1,4 @@
-import uuid from 'uuid/v4';
+import uuid from 'uuid';
 
 const initOrderState = {
     item :["原味鬆餅","巧克力鬆餅","抹茶鬆餅","花生鬆餅"],
@@ -31,7 +31,8 @@ export function order(state = initOrderState, action){
           {
             UpdatPresent.push({name:state.item[action.id],
                                 quantity:state.quantity[action.id],
-                              price:state.price[action.id]});
+                                price:state.price[action.id],
+                                id: uuid()});
           }
             return{
               ...state,
@@ -57,7 +58,6 @@ export function order(state = initOrderState, action){
               quantity : [0,0,0,0]
             }
         case '@ORDER/QORDERPANCAKE':
-            console.log(action.temp);
             var UpdatPresent = action.temp.filter(function(mixRecord){
           return state.item.indexOf(mixRecord.name) > -1;
         });
@@ -106,7 +106,8 @@ export function order2(state = initOrderState2, action){
           state.present2 = [...state.present2,
                               {name:state.item2[action.id],
                               quantity:state.quantity2[action.id],
-                              price:state.price2[action.id]}];
+                              price:state.price2[action.id],
+                              id: uuid()}];
         }
 
           return{
@@ -159,45 +160,11 @@ const initRecordState = {
 export function record(state = initRecordState,action){
   switch(action.type){
     case '@RECORD/SUBMIT':
-        // console.log(action.p1);
-        // console.log(action.p2);
-        //var Updatclient = [];
-        // for(var i = 0; i < action.p1.length; i++)
-        // {
-        //     UpdatRecords.push({
-        //           name:action.p1.name[i],
-        //           quantity:action.p1.quantity[i]
-        //     });
-        // }
-        // for(var i = 0; i < action.p2.length; i++)
-        // {
-        //     UpdatRecords.push({
-        //           name:action.p2.name[i],
-        //           quantity:action.p2.quantity[i]
-        //     });
-        // }
-
-        // UpdatRecords.push({name:action.p1.name,
-        //                    name2:action.p2.name,
-        //                    quantity:action.p1.quantity,
-        //                    quantity2:action.p2.quantity});
-
         if(action.p1.length !== 0 || action.p2.length !== 0){
           state.records = [...state.records,action.p1,action.p2];
-          // state.records2 = [...state.records2,action.p2];
-          //console.log("in if");
-        // state.client = [...state.client,
-        //                   {name:action.name,
-        //                   phone:action.phone,
-        //                   email:action.email,
-        //                   time:action.time,
-        //                   id:uuid()}
-        //                ];
-
         }
       return{
         ...state
-        // records : UpdatRecords
       };
       case '@RECORD/QORDER':
         return{
@@ -209,7 +176,21 @@ export function record(state = initRecordState,action){
   }
 }
 
+const initIntro = {
+  show_intro:1
+};
 
+export function Intro(state = initIntro,action){
+  switch(action.type){
+    case'@INTRO/INTROCLOSE':
+      return{
+        ...state,
+        show_intro : 0
+      };
+    default:
+      return state;
+  }
+}
 
 
 const initMainButtonState = {
@@ -221,11 +202,6 @@ const initMainButtonState = {
 export function MainButton(state = initMainButtonState,action){
   switch(action.type){
     case '@MAINBUTTON/MAINDISPLAY':
-      // var x;
-      // if(state.display === true)
-      //   x = false;
-      // else
-      //   x = false;
       return{
         ...state,
         display: !state.display
@@ -234,4 +210,20 @@ export function MainButton(state = initMainButtonState,action){
     default:
         return state;
   }
+}
+
+const initIconState = {
+  bounce: false
+};
+
+export function ShoppingCartIcon(state = initIconState,action) {
+    switch (action.type) {
+      case '@ICONFEEDBACK/BOUNCE':
+        return{
+          ...state,
+          bounce: !state.bounce
+        };
+      default:
+        return state;
+    }
 }

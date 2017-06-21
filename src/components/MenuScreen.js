@@ -18,16 +18,14 @@ import {connect} from 'react-redux';
 import PanCakeList from './PanCakeList.js';
 import DrinkList from './DrinkList.js';
 import * as Animatable from 'react-native-animatable';
+import ParallaxScrollView from 'react-native-parallax-scroll-view';
 
 
 
 
 
 export default class MenuScreen extends React.Component {
-    // static propTypes = {
-    //     navigation: PropTypes.object.isRequired,
-    //     // searchText: PropTypes.string.isRequired
-    // };
+
 
     constructor(props) {
 
@@ -39,40 +37,38 @@ export default class MenuScreen extends React.Component {
 
     this.handlePanCakeList = this.handlePanCakeList.bind(this);
     this.handleDrinkList   = this.handleDrinkList.bind(this);
-
     }
 
     render() {
-        // const {searchText} = this.props;
         const {navigate} = this.props.navigation;
         return (
             <NavigationContainer navigate={navigate} title='Menu'>
-              <Image source={require('../images/pk_bg2.jpg')} style={styles.image} resizeMode='cover'>
-              </Image>
-                <ScrollView style={{flex: 3}}>
-                    {/* <Text style={[styles.text, styles.store]}>高菲鬆餅屋</Text> */}
+              <ParallaxScrollView
+                              style={{flex: 1}}
+                             backgroundColor="#ebebeb"
+                             contentBackgroundColor="#ebebeb"
+                             parallaxHeaderHeight={100}
+                             renderForeground={() => (
+                               <Image source={require('../images/pk_bg2.jpg')} style={styles.image} resizeMode='cover'>
+                               </Image>
+                             )}>
+                <ScrollView style={{height: 700}}>
                 <Button block transparent onPress={this.handlePanCakeList}>
-                    {/* <Icon name='rocket' style={styles.icon} /> */}
-                    <Text style={styles.text}>waffle</Text>
+                    <Text style={styles.text}>Waffle</Text>
                     <Icon name = 'chevron-right'></Icon>
                 </Button>
-                {this.state.PanCakeList_open === 1 && <View ref="PanCakeList_Animation"><PanCakeList /></View>}
-                {/* <View ref="PanCakeList_Animation"><PanCakeList /></View> */}
+                {this.state.PanCakeList_open === 1 && <View ref="PanCakeList_Animation" style={{flex: 1}}><PanCakeList /></View>}
                 <Button block transparent onPress={this.handleDrinkList}>
-                    {/* <Icon name='rocket' style={styles.icon} /> */}
-                    <Text style={styles.text}>drinks</Text>
+                    <Text style={styles.text}>Drinks</Text>
                     <Icon name = 'chevron-right'></Icon>
                 </Button>
-                {this.state.DrinkList_open === 1 &&  <View ref="DrinkList_Animation"><DrinkList /></View>}
-                {/* <View ref="DrinkList_Animation"><DrinkList /></View> */}
+                {this.state.DrinkList_open === 1 &&  <View ref="DrinkList_Animation" style={{flex: 1}}><DrinkList /></View>}
               </ScrollView>
 
-
-                {/* {this.state.DrinkList_open === 1 && <DrinkList />}
-                {this.state.PanCakeList_open === 1 && <PanCakeList/>} */}
-                <Button block transparent  onPress={() => navigate('Waffle')}>
-                    <Text style={{textAlign:'right',fontFamily: 'monospace'}}>return</Text>
-                </Button>
+              </ParallaxScrollView>
+              <Button block transparent  onPress={() => navigate('Waffle')}>
+                  <Text style={{textAlign:'right',fontFamily: 'monospace'}}>Return</Text>
+              </Button>
             </NavigationContainer>
         );
     }
@@ -99,15 +95,10 @@ export default class MenuScreen extends React.Component {
             DrinkList_open : 1
           })
         else {
-          // window.refs.DrinkList_Animation.fadeOut(600);
           this.setState({
             DrinkList_open : 0
           })
         }
-        // this.setState((prevState)=>{
-        //   DrinkList_open : !prevState.DrinkList_open
-        // })
-        // this.forceUpdate();
       }
 
 
@@ -115,20 +106,17 @@ export default class MenuScreen extends React.Component {
 }
 const styles = {
   image:{
-    // opacity:0.8,
     width: undefined,
     height: undefined,
-    flex: 0.75
+    flex: 0.1
   },
   store:{
 
   },
   text:{
-    // textAlign: 'center',
     opacity : 1,
     flex: 1,
     fontFamily: 'monospace',
-    // fontWeight: 'bold',
     fontSize: 20
   }
 }

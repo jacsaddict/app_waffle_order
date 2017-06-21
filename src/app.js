@@ -1,5 +1,5 @@
 import React from 'react';
-import {BackHandler,Image} from 'react-native';
+import {BackHandler,Image,View} from 'react-native';
 
 import {StyleProvider} from 'native-base';
 import getTheme from '../native-base-theme/components';
@@ -13,15 +13,12 @@ import {search} from './states/search';
 import {toast} from './states/toast';
 import {post, postForm, postItem} from './states/post-reducers';
 
-
-import {order, order2, record} from './states/order-reducers';
+import {order, order2, record, Intro, ShoppingCartIcon} from './states/order-reducers';
 
 
 
 import {StackNavigator, NavigationActions, addNavigationHelpers} from 'react-navigation';
-import TodayScreen from './components/TodayScreen';
-import PostFormScreen from './components/PostFormScreen';
-import ForecastScreen from './components/ForecastScreen';
+
 import WaffleScreen from './components/WaffleScreen';
 import MenuScreen from './components/MenuScreen';
 import ShoppingCartScreen from './components/ShoppingCartScreen';
@@ -79,7 +76,7 @@ const nav = (state = initialState, action) => {
 const store = createStore(combineReducers({
     nav, search, toast,
     post, postForm, postItem,
-    order,order2,record
+    order,order2,record,Intro,ShoppingCartIcon
 }), compose(applyMiddleware(thunkMiddleware, loggerMiddleware)));
 
 export default class App extends React.Component {

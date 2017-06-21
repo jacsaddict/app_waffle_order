@@ -4,18 +4,26 @@ import {
     Text,
     View,
     ListView,
-    StyleSheet
+    StyleSheet,
+    Image
 } from 'react-native';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
 
-import {Content} from 'native-base';
+import {Content,
+        DeckSwiper,
+        Card,
+        CardItem,
+        Left,
+        Body
+} from 'native-base';
 import NavigationContainer from './NavigationContainer';
 
 
 import {Button,Icon} from 'native-base';
 import {connect} from 'react-redux';
-import {add,minus,add_to_cart} from '../states/order-actions.js';
+import {add,minus,add_to_cart,iconFeedback} from '../states/order-actions.js';
 import * as Animatable from 'react-native-animatable';
+
 
 
 
@@ -29,6 +37,29 @@ class PanCakeList extends React.Component {
     constructor(props) {
         super(props);
 
+        this.cards = [
+            {
+              item: this.props.item[0],
+              price: this.props.price[0],
+              quantity: this.props.quantity[0],
+              image: require('../images/honey.jpg'),
+              id: 0
+            },
+            {
+              item: this.props.item[1],
+              price: this.props.price[1],
+              quantity: this.props.quantity[1],
+              image: require('../images/chocolate.jpg'),
+              id:1
+            },
+            {
+              item: this.props.item[2],
+              price: this.props.price[2],
+              quantity: this.props.quantity[2],
+              image: require('../images/matcha.jpg'),
+              id:2
+            }
+          ];
         this.func_add = this.func_add.bind(this);
         this.func_minus = this.func_minus.bind(this);
         this.func_add_to_cart = this.func_add_to_cart.bind(this);
@@ -53,6 +84,7 @@ class PanCakeList extends React.Component {
 
       func_add_to_cart(id)
       {
+        this.props.dispatch(iconFeedback());
         this.props.dispatch(add_to_cart(id));
         this.forceUpdate();
       }
@@ -63,8 +95,38 @@ class PanCakeList extends React.Component {
         // const {searchText} = this.props;
         // const {navigate} = this.props.navigation;
         return (
-          <Animatable.View style={styles.mainbox} ref="view">
-              <View style={styles.rowContainer}>
+          <Animatable.View style={styles.mainbox} ref="view" style={{height: 425}}>
+            <DeckSwiper
+                        dataSource={this.cards}
+
+                        renderItem={item =>
+                            <Card style={{ elevation: 3 }}>
+                                <CardItem style={{backgroundColor:'#e8e8e8'}}>
+                                    <Left>
+                                        <Body>
+                                            <Text>{item.item}</Text>
+                                            <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incid. Excepteur sint </Text>
+                                        </Body>
+                                    </Left>
+                                </CardItem>
+                                <CardItem cardBody style={{alignSelf:'center',backgroundColor:'#e8e8e8'}}>
+                                  <View style={{backgroundColor:'#e8e8e8'}}>
+                                    <Image style={{ resizeMode: 'cover', width: 400 ,height:280, alignSelf:'center',opacity:0.85}} source={item.image} />
+                                  </View>
+                                </CardItem>
+                                <CardItem style={{justifyContent: 'space-between',backgroundColor:'#e8e8e8'}}>
+                                  <Button  small rounded onPress={() => this.func_minus(item.id)}><Text>–</Text></Button>
+                                    <Text style = {styles.quantity}>
+                                      {this.props.quantity[item.id]}
+                                    </Text>
+                                  <Button  small rounded onPress={() => this.func_add(item.id)  }><Text>+</Text></Button>
+                                  <Text style={{width: 130}}></Text>
+                                <Button  small onPress={() => this.func_add_to_cart(item.id)}><Icon name="cart"/></Button>
+                                </CardItem>
+                            </Card>
+                        }
+                    />
+              {/* <View style={styles.rowContainer}>
                   <Text style={styles.itemname}>
                     {this.props.item[0]}
                   </Text>
@@ -121,7 +183,7 @@ class PanCakeList extends React.Component {
                 </Text>
                 <Button  small onPress={() => this.func_add(2)  }><Text>+</Text></Button>
                 <Button  small onPress={() => this.func_add_to_cart(2)}><Icon name="cart"/></Button>
-              </View>
+              </View> */}
 
 
           </Animatable.View>
@@ -168,7 +230,8 @@ var styles = StyleSheet.create({
     flex : 1
   },
   quantity: {
-    width : 20
+    textAlign:'center',
+    alignSelf: 'center'
   },
   itemname: {
     width : 80
@@ -176,5 +239,6 @@ var styles = StyleSheet.create({
 });
 
 export default connect(state => ({
-    ...state.order
+    ...state.order,
+    ...state.ShoppingCartIcon
 }))(PanCakeList);
