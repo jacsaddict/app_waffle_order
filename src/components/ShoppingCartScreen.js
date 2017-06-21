@@ -9,9 +9,11 @@ import {
     ScrollView,
     StyleSheet,
     AsyncStorage,
-    Image
+    Image,
+    TouchableOpacity
 } from 'react-native';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 
 
 import {Content} from 'native-base';
@@ -37,11 +39,12 @@ class ShoppingCart extends React.Component {
                 input_name : '',
                 input_phone : '',
                 input_email : '',
-                input_time :'38247397',
+                input_time :'',
                 danger_name: false,
                 danger_phone: false,
                 danger_email: false,
-                danger_time: false
+                danger_time: false,
+                isDateTimePickerVisible: false
             };
 
       this.handelAdd = this.handelAdd.bind(this);
@@ -49,6 +52,9 @@ class ShoppingCart extends React.Component {
       this.handelDeleteDrink = this.handelDeleteDrink.bind(this);
       this.handelSubmit = this.handelSubmit.bind(this);
       this.handleUser = this.handleUser.bind(this);
+      this._showDateTimePicker = this._showDateTimePicker.bind(this);
+      this._hideDateTimePicker = this._hideDateTimePicker.bind(this);
+      this._handleDatePicked = this._handleDatePicked.bind(this);
     }
 
     render() {
@@ -139,19 +145,29 @@ class ShoppingCart extends React.Component {
                 underlineColorAndroid='#108838'
 
               />
+              <Text style={{height: 30}}></Text>
+
+              <Button block  bordered success onPress={this._showDateTimePicker} style={{height: 40,borderRadius: 8}}>
+                <Text style={{color: '#000',fontFamily: 'monospace'}}>Press to Pick Your Appointment Time</Text>
+              </Button>
+              <DateTimePicker
+                isVisible={this.state.isDateTimePickerVisible}
+                onConfirm={this._handleDatePicked}
+                onCancel={this._hideDateTimePicker}
+                mode="time"
+              />
             </View>
 
+            <Text style={{height: 15}}></Text>
 
             <Animatable.View ref="submit"><Button  block transparent onPress = {() => {this.handelSubmit(); this.handleUser(userid,this.state.input_name,this.state.input_email)}} ><Text style={{fontFamily: 'monospace'}}>submit</Text></Button></Animatable.View>
-                <Button block transparent  onPress={() => {this.handelAdd(this.props.present,this.props.present2,this.state.input_name,this.state.input_phone,this.state.input_email,this.state.input_time);}}>
-                    {/* <Icon name='rocket' style={styles.icon} /> */}
+                {/* <Button block transparent  onPress={() => {this.handelAdd(this.props.present,this.props.present2,this.state.input_name,this.state.input_phone,this.state.input_email,this.state.input_time);}}>
                     <Text style={{fontFamily: 'monospace'}}>Add to record</Text>
-                </Button>
+                </Button> */}
                 <Button block transparent  onPress={() => navigate('Waffle')}>
-                    {/* <Icon name='rocket' style={styles.icon} /> */}
                     <Text style={{fontFamily: 'monospace'}}>Return</Text>
                 </Button>
-                <Button block rounded onPress={()=>{AsyncStorage.removeItem('USER').then(value => console.log(value));}}><Text>Delete Records</Text></Button>
+
               </ParallaxScrollView>
             </NavigationContainer>
         );
@@ -175,7 +191,22 @@ class ShoppingCart extends React.Component {
           CreateUser(userid, name, email);
         }
     }
+    _handleDatePicked = (date) => {
+      console.log('A date has been picked: ', date);
+      this.setState({
+        input_time: date.toString()
+      })
+      this._hideDateTimePicker();
+    };
 
+    _showDateTimePicker(){
+        this.setState({ isDateTimePickerVisible: true });
+    }
+
+
+    _hideDateTimePicker(){
+      this.setState({ isDateTimePickerVisible: false });
+    }
 
     handelAdd(present1,present2,name,phone,email,time){
         this.props.dispatch(submit(present1,present2,name,phone,email,time));

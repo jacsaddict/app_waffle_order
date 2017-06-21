@@ -111,6 +111,9 @@ class RecordScreen extends React.Component {
                     quick_order={this.quick_order}
                   />
             </View>
+            <Button block transparent onPress={()=>{AsyncStorage.removeItem('USER').then(value => console.log(value));}}>
+                <Text>Delete Records</Text>
+            </Button>
             <Button block transparent  onPress={() => navigate('Waffle')}>
                 <Text style={{fontFamily: 'monospace',flex: 1,textAlign: 'center'}}>Return</Text>
             </Button>

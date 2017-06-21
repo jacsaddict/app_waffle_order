@@ -52,7 +52,7 @@ export default class MenuScreen extends React.Component {
                                <Image source={require('../images/pk_bg2.jpg')} style={styles.image} resizeMode='cover'>
                                </Image>
                              )}>
-                <ScrollView style={{height: 700}}>
+                <ScrollView style={{height: 950}}>
                 <Button block transparent onPress={this.handlePanCakeList}>
                     <Text style={styles.text}>Waffle</Text>
                     <Icon name = 'chevron-right'></Icon>

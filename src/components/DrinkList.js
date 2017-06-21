@@ -4,11 +4,18 @@ import {
     Text,
     View,
     ListView,
-    StyleSheet
+    StyleSheet,
+    Image
 } from 'react-native';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
 
-import {Content} from 'native-base';
+import {Content,
+        DeckSwiper,
+        Card,
+        CardItem,
+        Left,
+        Body
+} from 'native-base';
 import NavigationContainer from './NavigationContainer';
 
 
@@ -28,6 +35,30 @@ class DrinkItem extends React.Component {
     constructor(props) {
         super(props);
 
+
+        this.cards = [
+            {
+              item: this.props.item2[0],
+              price: this.props.price2[0],
+              quantity: this.props.quantity2[0],
+              image: require('../images/lemon-black-tea.jpg'),
+              id: 0
+            },
+            {
+              item: this.props.item2[1],
+              price: this.props.price2[1],
+              quantity: this.props.quantity2[1],
+              image: require('../images/icecream-black-tea.jpg'),
+              id:1
+            },
+            {
+              item: this.props.item2[2],
+              price: this.props.price2[2],
+              quantity: this.props.quantity2[2],
+              image: require('../images/mellon-lemon.jpg'),
+              id:2
+            }
+          ];
         this.func_add = this.func_add.bind(this);
         this.func_minus = this.func_minus.bind(this);
         this.func_add_to_cart = this.func_add_to_cart.bind(this);
@@ -62,8 +93,37 @@ class DrinkItem extends React.Component {
         // const {searchText} = this.props;
         // const {navigate} = this.props.navigation;
         return (
-          <Animatable.View style={styles.mainbox} ref="view">
-              <View style={styles.rowContainer}>
+          <Animatable.View style={styles.mainbox} ref="view" style={{height: 425}}>
+              <DeckSwiper
+                        dataSource={this.cards}
+                        renderItem={item =>
+                            <Card style={{ elevation: 3 }}>
+                                <CardItem style={{backgroundColor:'#e8e8e8'}}>
+                                    <Left>
+                                        <Body>
+                                            <Text style={{color: '#e55100',fontSize: 18}}>{item.item}</Text>
+                                            <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incid. Excepteur sint </Text>
+                                        </Body>
+                                    </Left>
+                                </CardItem>
+                                <CardItem cardBody style={{alignSelf:'center',backgroundColor:'#e8e8e8'}}>
+                                  <View style={{backgroundColor:'#e8e8e8'}}>
+                                    <Image style={{ resizeMode: 'cover', width: 400 ,height:280, alignSelf:'center',opacity:1}} source={item.image} />
+                                  </View>
+                                </CardItem>
+                                <CardItem style={{justifyContent: 'space-between',backgroundColor:'#e8e8e8'}}>
+                                  <Button  small rounded onPress={() => this.func_minus(item.id)}><Text>–</Text></Button>
+                                    <Text style = {styles.quantity}>
+                                      {this.props.quantity2[item.id]}
+                                    </Text>
+                                  <Button  small rounded onPress={() => this.func_add(item.id)  }><Text>+</Text></Button>
+                                  <Text style={{width: 130}}></Text>
+                                <Button  small onPress={() => this.func_add_to_cart(item.id)}><Icon name="cart"/></Button>
+                                </CardItem>
+                            </Card>
+                        }
+                    />
+              {/* <View style={styles.rowContainer}>
                 <Text style={styles.itemname}>
                   {this.props.item2[0]}
                 </Text>
@@ -119,7 +179,7 @@ class DrinkItem extends React.Component {
                 </Text>
                 <Button small onPress={() => this.func_add(2)  }><Text>+</Text></Button>
                 <Button small onPress={() => this.func_add_to_cart(2)}><Icon name="cart"/></Button>
-              </View>
+              </View> */}
           </Animatable.View>
         );
     }

@@ -104,7 +104,7 @@ class PanCakeList extends React.Component {
                                 <CardItem style={{backgroundColor:'#e8e8e8'}}>
                                     <Left>
                                         <Body>
-                                            <Text>{item.item}</Text>
+                                            <Text  style={{color: '#e55100',fontSize: 18}}>{item.item}</Text>
                                             <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incid. Excepteur sint </Text>
                                         </Body>
                                     </Left>

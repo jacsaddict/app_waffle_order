@@ -23,6 +23,9 @@ class NavigationContainer extends React.Component {
     }
     componentDidUpdate(prevProps, prevState)
     {
+      if(prevProps.bounce !== this.props.bounce)
+           this.refs.icon.bounce(800);
+
     }
     render() {
         const {title, navigate} = this.props;
@@ -32,8 +35,8 @@ class NavigationContainer extends React.Component {
                         <Body ><Title style={{textAlign:'center',alignItems:'center'}}>{title}</Title></Body>
                     </Header>
                     {this.props.children}
-                    <Footer >
-                            <FooterTab style={{justifyContent: 'space-between'}}>
+                    <Footer style={{padding:null,zIndex:0}}>
+                            <FooterTab style={{justifyContent: 'space-between',padding:null,zIndex:0}}>
                               <Button   style={styles.item} onPress={() => navigate('Menu')}>
                                   <Icon name='pizza' style={styles.icon} />
                                 </Button>
@@ -43,25 +46,29 @@ class NavigationContainer extends React.Component {
                                 <Button   style={styles.item}>
                                   <Icon name='phone' style={styles.icon}/>
                                 </Button>
-                                <Button  onPress={() => navigate('ShoppingCart')} style={styles.item}>
-                                    {this.props.present.length+this.props.present2.length > 0 ?
-                                    <IconBadge
-                                        MainElement={
-                                          <Icon name='cart' style={{color: appColors.primaryLightText}} />
-                                        }
-                                        BadgeElement={
-                                          <Text style={{color:'#FFFFFF'}}>{this.props.present.length+this.props.present2.length}</Text>
-                                        }
 
-                                        IconBadgeStyle={
-                                          {width:17,
-                                          height:17,
-                                          top:-8,
-                                          right: -0.6,
-                                          backgroundColor: '#E32636'}
-                                        }
-                                      /> : <Icon name='cart' style={{color: appColors.primaryLightText}} />}
-                                </Button>
+                                    {this.props.present.length+this.props.present2.length > 0 ?
+                                      <Button  onPress={() => navigate('ShoppingCart')} style={{padding:null,zIndex:0}}>
+                                          <Animatable.View ref="icon" style={{padding: null}}><IconBadge
+                                              MainElement={
+                                                <Icon name='cart' style={{color: appColors.primaryLightText,fontSize:20,zIndex:1}} />
+                                              }
+                                              BadgeElement={
+                                                <Text style={{color:'#FFFFFF',fontSize:10,zIndex:1}}>{this.props.present.length+this.props.present2.length}</Text>
+                                              }
+
+                                              IconBadgeStyle={
+                                                {width:15,
+                                                height:10.5,
+                                                top:-1,
+                                                right: -0.6,
+                                                backgroundColor: '#E32636',
+                                                zIndex:1}
+                                              }
+                                              style={{height: 52,padding:null,border:null,zIndex:1}}
+                                            /></Animatable.View></Button>
+                                            :
+                                            <Button  onPress={() => navigate('ShoppingCart')} style={styles.item}><View><Icon name='cart' style={{color: appColors.primaryLightText}} /></View></Button>}
                             </FooterTab>
                         </Footer>
                 </Container>
