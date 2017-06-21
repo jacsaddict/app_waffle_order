@@ -43,6 +43,7 @@ class PanCakeList extends React.Component {
               price: this.props.price[0],
               quantity: this.props.quantity[0],
               image: require('../images/honey.jpg'),
+              intro: 'Delicious Waffles with original and honey flavor.',
               id: 0
             },
             {
@@ -50,6 +51,7 @@ class PanCakeList extends React.Component {
               price: this.props.price[1],
               quantity: this.props.quantity[1],
               image: require('../images/chocolate.jpg'),
+              intro: 'Delicious Waffles with chocolate & sweety flavor.',
               id:1
             },
             {
@@ -57,6 +59,7 @@ class PanCakeList extends React.Component {
               price: this.props.price[2],
               quantity: this.props.quantity[2],
               image: require('../images/matcha.jpg'),
+              intro: 'Delicious Waffles with matcha & rich flavor.',
               id:2
             }
           ];
@@ -105,7 +108,7 @@ class PanCakeList extends React.Component {
                                     <Left>
                                         <Body>
                                             <Text  style={{color: '#e55100',fontSize: 18}}>{item.item}</Text>
-                                            <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incid. Excepteur sint </Text>
+                                            <Text>{item.intro}</Text>
                                         </Body>
                                     </Left>
                                 </CardItem>

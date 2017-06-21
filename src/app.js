@@ -23,13 +23,14 @@ import WaffleScreen from './components/WaffleScreen';
 import MenuScreen from './components/MenuScreen';
 import ShoppingCartScreen from './components/ShoppingCartScreen';
 import RecordScreen from './components/RecordScreen';
-
+import ContactScreen from './components/ContactScreen'
 
 const AppNavigator = StackNavigator({
     Waffle: {screen: WaffleScreen},
     Menu: {screen: MenuScreen},
     ShoppingCart: {screen: ShoppingCartScreen},
-    Record: {screen: RecordScreen}
+    Record: {screen: RecordScreen},
+    Contact: {screen: ContactScreen},
 }, {
     headerMode: 'none'
 });

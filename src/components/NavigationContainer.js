@@ -43,7 +43,7 @@ class NavigationContainer extends React.Component {
                                 <Button   style={styles.item} onPress={() => navigate('Record')}>
                                   <Icon name='bookmark' style={styles.icon} />
                                 </Button>
-                                <Button   style={styles.item}>
+                                <Button   style={styles.item} onPress={() => navigate('Contact')}>
                                   <Icon name='phone' style={styles.icon}/>
                                 </Button>
 

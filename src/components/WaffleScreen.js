@@ -59,7 +59,7 @@ class WaffleScreen extends React.Component {
                     {/* <Icon name='rocket' style={styles.icon} /> */}
                     <Icon style={{color:'#80a4ea'}} name="record"/><Text style={styles.text}>訂餐紀錄</Text><Text style={{width: 5}}></Text>
                 </Button>
-                <Button block rounded bordered warning onPress={() => navigate('Waffle')} style={{justifyContent: 'space-between', borderColor: '#526057'}}>
+                <Button block rounded bordered warning onPress={() => navigate('Contact')} style={{justifyContent: 'space-between', borderColor: '#526057'}}>
                     {/* <Icon name='rocket' style={styles.icon} /> */}
                     <Icon style={{color:'#526057'}} name="phone"/><Text style={styles.text}>聯絡我們</Text><Text style={{width: 5}}></Text>
                 </Button>

@@ -42,6 +42,7 @@ class DrinkItem extends React.Component {
               price: this.props.price2[0],
               quantity: this.props.quantity2[0],
               image: require('../images/lemon-black-tea.jpg'),
+              intro: 'Life Gave Me Lessons When I Wanted Lemons.',
               id: 0
             },
             {
@@ -49,6 +50,7 @@ class DrinkItem extends React.Component {
               price: this.props.price2[1],
               quantity: this.props.quantity2[1],
               image: require('../images/icecream-black-tea.jpg'),
+              intro: 'ice cream ice cream fulfills my dream',
               id:1
             },
             {
@@ -56,6 +58,7 @@ class DrinkItem extends React.Component {
               price: this.props.price2[2],
               quantity: this.props.quantity2[2],
               image: require('../images/mellon-lemon.jpg'),
+              intro: 'Sour lemons mixed with sweet mellon tea quenching your thirst.',
               id:2
             }
           ];
@@ -102,7 +105,7 @@ class DrinkItem extends React.Component {
                                     <Left>
                                         <Body>
                                             <Text style={{color: '#e55100',fontSize: 18}}>{item.item}</Text>
-                                            <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incid. Excepteur sint </Text>
+                                            <Text>{item.intro}</Text>
                                         </Body>
                                     </Left>
                                 </CardItem>
